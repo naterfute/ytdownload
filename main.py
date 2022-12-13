@@ -2,10 +2,10 @@
 import yt_dlp, typer, os.path, sys, json
 from ytdl.variables import *
 from ytdl.config import *
-app = typer.Typer()
+from typing import Union
+app = typer.Typer('-h', '--help')
 
 #######! AUDIO DOWNLOADER
-
 @app.command()
 def audio(
     multiple: bool = typer.Option(False, '--multiple', '-m' , help='Insert Multiple Links to Download'),
@@ -35,7 +35,7 @@ def audio(
                         # yt = YouTube(f'{multiplelinks}')
 
                         if multiplelinks in youtubelinks:
-                            print('already about to download')
+                            print('Already in List')
                             
                         else:
                             youtubelinks.append(multiplelinks)
