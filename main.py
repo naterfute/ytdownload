@@ -1,18 +1,15 @@
 #!/home/kaleb/coding/python/youtube/downloader/cli/.yttcli/bin/python
 import yt_dlp, typer, os.path, sys, json
 from ytdl.variables import *
+from ytdl.config import *
 app = typer.Typer()
-AUDIO_FILE_SAVE='~/Music'
-VIDEO_FILE_SAVE='~/Videos'
 
 #######! AUDIO DOWNLOADER
 
 @app.command()
 def audio(
-    # link: bool = typer.Option(True,'--link', "-l", help='Insert One Link to Download'),
     multiple: bool = typer.Option(False, '--multiple', '-m' , help='Insert Multiple Links to Download'),
     path: str = typer.Option(AUDIO_FILE_SAVE, '--path', '-p', help='Temp Download Path'),
-    # DEPRECATED!   fetch: str = typer.Option(False, autocompletion=autocomplete, help='Fetch youtube links from extra.fetch and download them'),
     incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file (Still writes to archive file!!)')
           ):
         youtubelinks=[]
@@ -85,10 +82,8 @@ def audio(
 ########!VIDEO DOWNLOADER
 @app.command()
 def video(
-    # link: bool = typer.Option(True,'--link', "-l", help='Insert One Link to Download'),
     multiple: bool = typer.Option(False, '--multiple', '-m' , help='Insert Multiple Links to Download'),
-    path: str = typer.Option(AUDIO_FILE_SAVE, '--path', '-p', help='Temp Download Path'),
-    # DEPRECATED!   fetch: str = typer.Option(False, autocompletion=autocomplete, help='Fetch youtube links from extra.fetch and download them'),
+    path: str = typer.Option(VIDEO_FILE_SAVE, '--path', '-p', help='Temp Download Path'),
     incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file')
           ):
         youtubelinks=[]
