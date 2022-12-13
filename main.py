@@ -1,4 +1,4 @@
-#!/home/kaleb/coding/python/youtube/downloader/cli/.yttcli/bin/python
+#!/usr/bin/python3.10
 import yt_dlp, typer, os.path, sys, json
 from ytdl.variables import *
 from ytdl.config import *
