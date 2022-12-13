@@ -1,9 +1,10 @@
-#!/usr/bin/python3.10
+#!/home/kaleb/coding/python/youtube/downloader/cli/.ytdcli/bin/python
 import yt_dlp, typer, os.path, sys, json
 from ytdl.variables import *
 from ytdl.config import *
-from typing import Union
+from rich.console import Console
 app = typer.Typer('-h', '--help')
+console = Console()
 
 #######! AUDIO DOWNLOADER
 @app.command()
