@@ -1,4 +1,4 @@
-#!/home/kaleb/coding/python/youtube/downloader/cli/.ytdcli/bin/python
+#!/usr/bin/python3.10
 import yt_dlp, typer, os.path, sys, json
 from ytdl.variables import *
 from ytdl.myconf import *
@@ -10,7 +10,7 @@ app = typer.Typer()
 def audio(
     multiple: bool = typer.Option(False, '--multiple', '-m' , help='Insert Multiple Links to Download'),
     dpath: str = typer.Option(Audio_File_Save, '--path', '-p', help='Temp Download Path'),
-    incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file (Still writes to archive file!!)')
+    incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file')
           ):
         youtubelinks=[]
         link = True
