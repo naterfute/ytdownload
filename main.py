@@ -1,7 +1,6 @@
 #!/home/kaleb/coding/python/youtube/downloader/cli/.yttcli/bin/python
 import yt_dlp, typer, os.path, sys, json
 from ytdl.variables import *
-from time import sleep
 app = typer.Typer()
 AUDIO_FILE_SAVE='~/Music'
 VIDEO_FILE_SAVE='~/Videos'
@@ -17,7 +16,6 @@ def audio(
     incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file (Still writes to archive file!!)')
           ):
         youtubelinks=[]
-        youtubelinksedited=[]
         link = True
         try:
             pathExist = os.path.exists(path)
@@ -55,8 +53,6 @@ def audio(
                                 ydl.download(x)
                     
                     if multiplelinks == 'next':
-                        print(f'{youtubelinksedited}')
-                        sleep(3)
                         print('Downloading Audio')
                         for x in youtubelinks:
                             with yt_dlp.YoutubeDL(ydl_optsA) as ydl:
@@ -96,7 +92,6 @@ def video(
     incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file')
           ):
         youtubelinks=[]
-        youtubelinksedited=[]
         link = True
         try:
             pathExist = os.path.exists(path)
@@ -128,16 +123,12 @@ def video(
                         print('Not a valid youtube video')
 
                     if multiplelinks == 'next' and incognito == True:
-                        print(youtubelinksedited)
-                        sleep(3)
                         print('Downloading Video Incognito')
                         for x in youtubelinks:
                             with yt_dlp.YoutubeDL(ydl_optsIVA) as ydl:
                                 ydl.download(x)
                     
                     if multiplelinks == 'next':
-                        print(f'{youtubelinksedited}')
-                        sleep(3)
                         print('Downloading Video')
                         for x in youtubelinks:
                             with yt_dlp.YoutubeDL(ydl_optsV) as ydl:
