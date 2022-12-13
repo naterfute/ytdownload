@@ -1,8 +1,6 @@
 #!/home/kaleb/coding/python/youtube/downloader/cli/.yttcli/bin/python
 import yt_dlp, typer, os.path, sys, json
-# from pytube import YouTube
 from ytdl.variables import *
-# from ytdl.extra.fetch import *
 from time import sleep
 app = typer.Typer()
 AUDIO_FILE_SAVE='~/Music'
@@ -51,8 +49,6 @@ def audio(
                         print('Not a valid youtube video')
 
                     if multiplelinks == 'next' and incognito == True:
-                        print(youtubelinksedited)
-                        sleep(3)
                         print('Downloading Audio Incognito')
                         for x in youtubelinks:
                             with yt_dlp.YoutubeDL(ydl_optsA) as ydl:
