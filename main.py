@@ -1,21 +1,21 @@
-#!/usr/bin/python3.10
+#!/home/kaleb/coding/python/youtube/downloader/cli/.ytdcli/bin/python
 import yt_dlp, typer, os.path, sys, json
 from ytdl.variables import *
-from ytdl.config import *
-from typing import Union
-app = typer.Typer('-h', '--help')
+from ytdl.myconf import *
+app = typer.Typer()
 
 #######! AUDIO DOWNLOADER
+
 @app.command()
 def audio(
     multiple: bool = typer.Option(False, '--multiple', '-m' , help='Insert Multiple Links to Download'),
-    path: str = typer.Option(AUDIO_FILE_SAVE, '--path', '-p', help='Temp Download Path'),
+    dpath: str = typer.Option(Audio_File_Save, '--path', '-p', help='Temp Download Path'),
     incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file (Still writes to archive file!!)')
           ):
         youtubelinks=[]
         link = True
         try:
-            pathExist = os.path.exists(path)
+            pathExist = os.path.exists(dpath)
             
             if pathExist == False:
                 print('Path Does not exist')
@@ -31,7 +31,7 @@ def audio(
             
                     multiplelinks=input('')
                    
-                    if 'https://www.youtube.com' in multiplelinks or 'https://youtu.be/' in multiplelinks or 'http://youtu.be' in multiplelinks or 'https://youtube.com' in multiplelinks or 'youtube.com' in multiplelinks:
+                    if allowedlinks in multiplelinks:
                         # yt = YouTube(f'{multiplelinks}')
 
                         if multiplelinks in youtubelinks:
@@ -83,7 +83,7 @@ def audio(
 @app.command()
 def video(
     multiple: bool = typer.Option(False, '--multiple', '-m' , help='Insert Multiple Links to Download'),
-    path: str = typer.Option(VIDEO_FILE_SAVE, '--path', '-p', help='Temp Download Path'),
+    path: str = typer.Option(Video_File_Save, '--path', '-p', help='Temp Download Path'),
     incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file')
           ):
         youtubelinks=[]
