@@ -1,8 +1,8 @@
 
 #! Figure out how to use yml files dumdum
 import os
-from config import AUDIO_PATH, VIDEO_PATH, AudioArchive, VideoArchive
-
+from .myconf import Audio_File_Save, Video_File_Save, AudioArchive, VideoArchive
+from ..main import dpath
 #! user most Important
 
 
@@ -28,8 +28,6 @@ class MyLogger:
         
 #* Functions
 
-def youtube(list):
-    youtube(list)
 
 def my_hook(d):
     if d['status'] == 'finished':
@@ -39,7 +37,6 @@ def my_hook(d):
         print(d['_percent_str'], d['_eta_str'])
         
     
-
 #* Multi-Line Variables
 
 ydl_optsA = {
@@ -47,7 +44,7 @@ ydl_optsA = {
             'writethumbnail': True,
             'writesubtitles': True,
             'subtitle': 'write-sub sub-lang en sub-format json3',
-            'outtmpl': f'{AUDIO_PATH}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
+            'outtmpl': f'{dpath}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
             'breakonexisting': True,
             'ProgressTemplate': 'progress',
             'writeautosubs': False,
@@ -72,7 +69,7 @@ ydl_optsIAA = {
             'writethumbnail': True,
             'writesubtitles': True,
             'subtitle': 'write-sub sub-lang en sub-format json3',
-            'outtmpl': f'{AUDIO_PATH}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
+            'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
             'breakonexisting': True,
             'ProgressTemplate': 'progress',
             'writeautosubs': False,
@@ -93,7 +90,7 @@ ydl_optsIAA = {
 ydl_optsV = {'format': 'remux/best',
             'writesubtitles': True,
             'subtitle': '--write-sub --sub-lang en --sub-format json3',         
-            'outtmpl': VIDEO_PATH + '/%(title)s.%(ext)s',
+            'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
             'breakonexisting': True,
             'quite': True,
             'logger': MyLogger(),
@@ -111,7 +108,7 @@ ydl_optsV = {'format': 'remux/best',
 ydl_optsIVA = {'format': 'remux/best',
             'writesubtitles': True,
             'subtitle': '--write-sub --sub-lang en --sub-format json3',         
-            'outtmpl': VIDEO_PATH + '/%(title)s.%(ext)s',
+            'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
             'breakonexisting': True,
             'quite': True,
             'logger': MyLogger(),
