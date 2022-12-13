@@ -1,18 +1,12 @@
 #!/home/kaleb/coding/python/youtube/downloader/cli/.yttcli/bin/python
 import yt_dlp, typer, os.path, sys, json
 # from pytube import YouTube
-from ytdl.extra.variables import *
+from ytdl.variables import *
 # from ytdl.extra.fetch import *
 from time import sleep
 app = typer.Typer()
 AUDIO_FILE_SAVE='~/Music'
 VIDEO_FILE_SAVE='~/Videos'
-
-
-#* Fuctions
-
-
-    
 
 #######! AUDIO DOWNLOADER
 
