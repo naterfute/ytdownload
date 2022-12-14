@@ -2,11 +2,8 @@
 #! Figure out how to use yml files dumdum
 import os
 import sys
-sys.path.append("..") # Adds higher directory to python modules path.
 from .myconf import Audio_File_Save, Video_File_Save, AudioArchive, VideoArchive
-from ..main import dpath
 #! user most Important
-
 
 #* Classes
 
@@ -39,6 +36,8 @@ def my_hook(d):
         print(d['_percent_str'], d['_eta_str'])
         
     
+#* Classes
+    
 #* Multi-Line Variables
 
 ydl_optsA = {
@@ -46,7 +45,7 @@ ydl_optsA = {
             'writethumbnail': True,
             'writesubtitles': True,
             'subtitle': 'write-sub sub-lang en sub-format json3',
-            'outtmpl': f'{dpath}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
+            'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
             'breakonexisting': True,
             'ProgressTemplate': 'progress',
             'writeautosubs': False,
@@ -58,7 +57,6 @@ ydl_optsA = {
             'parsemetadata': "${downloadTimestamp}:%(meta_download_date)s",
             'parsemetadata': "%(release_date>%Y-%m-%d,upload_date>%Y-%m-%d)s:%(meta_publish_date)s",
             'embedmeatdata': True,
-            
             'postprocessors':[
             {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': '320'},
             {'key': 'FFmpegMetadata', 'add_metadata': 'True'},

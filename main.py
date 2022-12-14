@@ -2,7 +2,10 @@
 import yt_dlp, typer, os.path, sys, json
 from ytdl.variables import *
 from ytdl.myconf import *
-app = typer.Typer()
+app = typer.Typer(add_completion=False)
+
+def main():
+    pass
 
 #######! AUDIO DOWNLOADER
 
