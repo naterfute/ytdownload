@@ -1,6 +1,8 @@
 
 #! Figure out how to use yml files dumdum
 import os
+import sys
+sys.path.append("..") # Adds higher directory to python modules path.
 from .myconf import Audio_File_Save, Video_File_Save, AudioArchive, VideoArchive
 from ..main import dpath
 #! user most Important
