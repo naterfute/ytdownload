@@ -2,8 +2,11 @@
 #! Figure out how to use yml files dumdum
 import os
 import sys
-from .myconf import Audio_File_Save, Video_File_Save, AudioArchive, VideoArchive
 #! user most Important
+Audio_File_Save = '~/Music/Downloaded'
+Video_File_Save = '~/Videos/'
+AudioArchive = '/home/kaleb/Music/AudioArchive.txt'
+VideoArchive = '/home/kaleb/Videos/VideoArchive.txt'
 
 #* Classes
 

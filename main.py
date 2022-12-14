@@ -1,7 +1,6 @@
 #!/usr/bin/python3.10
 import yt_dlp, typer, os.path, sys, json
 from ytdl.variables import *
-from ytdl.myconf import *
 app = typer.Typer(add_completion=False)
 
 def main():
