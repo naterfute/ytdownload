@@ -1,12 +1,14 @@
 
 #! Figure out how to use yml files dumdum
-import os
-import sys
+from os import environ
 #! user most Important
-Audio_File_Save = '~/Music/Downloaded'
-Video_File_Save = '~/Videos/'
-AudioArchive = '~/Music/AudioArchive.txt'
-VideoArchive = '~/Videos/VideoArchive.txt'
+downloadpath = environ['HOME']
+# downloadpath=os.path('~/home/')
+Audio_File_Save = f'{downloadpath}/Music/Downloaded'
+Video_File_Save = f'{downloadpath}/Videos/'
+AudioArchive = f'{downloadpath}/Music/AudioArchive.txt'
+AudioSubtitleSave = f'{downloadpath}/Music/subtitles'
+VideoArchive = f'{downloadpath}/Videos/VideoArchive.txt'
 
 #* Classes
 
@@ -46,8 +48,10 @@ def my_hook(d):
 ydl_optsA = {
             'format': 'bestaudio/best',
             'writethumbnail': True,
+            'outtmpl': '{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
             'writesubtitles': True,
-            'subtitle': 'write-sub sub-lang en sub-format json3',
+            'sublang': 'eng',
+            'subformat': 'json3',
             'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
             'breakonexisting': True,
             'ProgressTemplate': 'progress',
@@ -72,6 +76,7 @@ ydl_optsIAA = {
             'writethumbnail': True,
             'writesubtitles': True,
             'subtitle': 'write-sub sub-lang en sub-format json3',
+            
             'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
             'breakonexisting': True,
             'ProgressTemplate': 'progress',
@@ -110,7 +115,7 @@ ydl_optsV = {'format': 'remux/best',
             }
 ydl_optsIVA = {'format': 'remux/best',
             'writesubtitles': True,
-            'subtitle': '--write-sub --sub-lang en --sub-format json3',         
+            'subtitle': '--write-sub --sub-lang en --sub-format json3',
             'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
             'breakonexisting': True,
             'quite': True,
@@ -126,7 +131,8 @@ ydl_optsIVA = {'format': 'remux/best',
             ],
             }
 
-ydl_otpsS = {
+ydl_optsAS = {
+    'outtmpl': '{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
     'writesubtitles': True,
     'sublang': 'eng',
     'subformat': 'json3',
