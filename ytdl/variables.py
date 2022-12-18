@@ -126,7 +126,12 @@ ydl_optsIVA = {'format': 'remux/best',
             ],
             }
 
-
+ydl_otpsS = {
+    'writesubtitles': True,
+    'sublang': 'eng',
+    'subformat': 'json3',
+    
+}
 
 s18= ' ' * 18
 s20= ' ' * 20
