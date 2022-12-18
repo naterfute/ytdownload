@@ -1,6 +1,7 @@
 #!/usr/bin/python3.10
 
-import yt_dlp, typer, os.path
+import yt_dlp, typer
+from os import path, mkdir
 from sys import exit
 from ytdl.variables import *
 app = typer.Typer(add_completion=False)
@@ -17,11 +18,17 @@ def audio(
     subtitles: bool = typer.Option(False, '--subtitles', '-s', help='Download Subtitles Only'),
     incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file')
           ):
+        downloadpath = environ['HOME']
         youtubelinks=[]
         link = True
         try:
-            pathExist = os.path.exists(dpath)
-            
+            pathExist = path.exists(dpath)
+            if path.exists(AudioArchive):
+                pass
+            else:
+                with open(f'{AudioArchive}', 'w') as f:
+                    f.close()
+                pass
             if pathExist == False:
                 print('Path Does not exist')
                 exit(0)
@@ -106,7 +113,7 @@ def video(
         youtubelinks=[]
         link = True
         try:
-            pathExist = os.path.exists(path)
+            pathExist = path.exists(path)
             
             if pathExist == False:
                 print('Path Does not exist')

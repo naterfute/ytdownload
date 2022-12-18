@@ -4,7 +4,7 @@ from os import environ
 #! user most Important
 downloadpath = environ['HOME']
 # downloadpath=os.path('~/home/')
-Audio_File_Save = f'{downloadpath}/Music/Downloaded'
+Audio_File_Save = f'{downloadpath}/Music/'
 Video_File_Save = f'{downloadpath}/Videos/'
 AudioArchive = f'{downloadpath}/Music/AudioArchive.txt'
 AudioSubtitleSave = f'{downloadpath}/Music/subtitles'
@@ -154,3 +154,14 @@ class color:
    UNDERLINE = '\033[4m'
    BLINK = '\033[5m'
    END = '\033[0m'
+class COLOR:
+    Red = '\033[91m'
+    Green = '\033[92m'
+    Blue = '\033[94m'
+    Cyan = '\033[96m'
+    White = '\033[97m'
+    Yellow = '\033[93m'
+    Magenta = '\033[95m'
+    Grey = '\033[90m'
+    Black = '\033[90m'
+    Default = '\033[99m'
