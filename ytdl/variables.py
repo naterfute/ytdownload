@@ -48,7 +48,7 @@ def my_hook(d):
 ydl_optsA = {
             'format': 'bestaudio/best',
             'writethumbnail': True,
-            'outtmpl': '{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
+            'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
             'writesubtitles': True,
             'sublang': 'eng',
             'subformat': 'json3',
@@ -76,7 +76,6 @@ ydl_optsIAA = {
             'writethumbnail': True,
             'writesubtitles': True,
             'subtitle': 'write-sub sub-lang en sub-format json3',
-            
             'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
             'breakonexisting': True,
             'ProgressTemplate': 'progress',
