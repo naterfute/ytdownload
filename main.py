@@ -114,7 +114,13 @@ def video(
         link = True
         try:
             pathExist = path.exists(path)
-            
+            if path.exists(AudioArchive):
+                pass
+            else:
+                with open(f'{VideoArchive}', 'w') as f:
+                    f.close()
+                pass
+
             if pathExist == False:
                 print('Path Does not exist')
                 exit(0)

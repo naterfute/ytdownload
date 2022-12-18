@@ -164,4 +164,4 @@ class COLOR:
     Magenta = '\033[95m'
     Grey = '\033[90m'
     Black = '\033[90m'
-    Default = '\033[99m'
+    Default = '\033[0m'
