@@ -1,4 +1,5 @@
 #!/usr/bin/python3.10
+
 import yt_dlp, typer, os.path, sys, json
 from ytdl.variables import *
 app = typer.Typer(add_completion=False)
@@ -12,6 +13,7 @@ def main():
 def audio(
     multiple: bool = typer.Option(False, '--multiple', '-m' , help='Insert Multiple Links to Download'),
     dpath: str = typer.Option(Audio_File_Save, '--path', '-p', help='Temp Download Path'),
+    subtitles: bool = typer.Option(False, '--subtitles', '-s', help='Download Subtitles Only'),
     incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file')
           ):
         youtubelinks=[]
@@ -33,7 +35,7 @@ def audio(
             
                     multiplelinks=input('')
                    
-                    if allowedlinks in multiplelinks:
+                    if ['https://www.youtube.com', 'https://youtu.be/', 'http://youtu.be', 'https://youtube.com', 'youtube.com' ] in multiplelinks:
                         # yt = YouTube(f'{multiplelinks}')
 
                         if multiplelinks in youtubelinks:
@@ -50,6 +52,12 @@ def audio(
                         for x in youtubelinks:
                             with yt_dlp.YoutubeDL(ydl_optsA) as ydl:
                                 ydl.download(x)
+                    if multiplelinks == 'next' and subtitles == True:
+                        print('Downloading Subtitles only')
+                        for x in youtubelinks:
+                            with yt_dlp.YoutubeDL(ydl_optsS) as ydl:
+                                ydl.download(x)                    
+
                     
                     if multiplelinks == 'next':
                         print('Downloading Audio')
@@ -69,7 +77,7 @@ def audio(
                 while True:
                     ytlink=input('Insert One Link: ')
 
-                    if 'https://www.youtube.com' in ytlink or 'https://youtu.be/' in ytlink:
+                    if ['https://www.youtube.com', 'https://youtu.be/', 'http://youtu.be', 'https://youtube.com', 'youtube.com' ] in ytlink:
                         with yt_dlp.YoutubeDL(ydl_optsA) as ydl:
                             ydl.download([ytlink])
                         break

@@ -5,8 +5,8 @@ import sys
 #! user most Important
 Audio_File_Save = '~/Music/Downloaded'
 Video_File_Save = '~/Videos/'
-AudioArchive = '/home/kaleb/Music/AudioArchive.txt'
-VideoArchive = '/home/kaleb/Videos/VideoArchive.txt'
+AudioArchive = '~/Music/AudioArchive.txt'
+VideoArchive = '~/Videos/VideoArchive.txt'
 
 #* Classes
 
