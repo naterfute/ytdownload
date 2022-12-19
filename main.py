@@ -192,6 +192,53 @@ def video(
             print('\nKeyboard interrupt.')
         except FileNotFoundError as e:
             print(e)
+###! Anime Downlaoder
+@app.command()
+def crunchyroll(
+    dpath: str = typer.Option(Anime_File_Save, '--path', '-p'),
+    multiple: bool = typer.Option(False, '--multiple', '-m', help='Insert Multiple Links to Download')
+):
+    link = True
+    animelinks = []
+    pathExist = path.exists(dpath)
+    if path.exists(VideoArchive):
+        pass
+    else:
+        with open(f'{VideoArchive}', 'w') as f:
+            f.close()
+        pass
+    if pathExist == False:
+        print('Path Does not exist')
+        exit(0)
+    if pathExist:
+        print('path Exists, Continuing ')
+    if multiple:
+        print('Input links')
+        
+        while True:
+            
+            multiplelinks = input('')
+            
+            if multiple == 'next':
+                print('Downloading')
+            if 'crunchyroll.com' in multiplelinks:
+                if multiplelinks in animelinks:
+                    print('Already in List')
+                            
+                else:
+                    animelinks.append(multiplelinks)
+    if link:
+        while True:
+            animelink=input('Insert One Link: ')
+            
+            if 'crunchyroll.com' in animelink:
+                print('crunchyrollbeta.%(id)s')
+                with yt_dlp.YoutubeDL(ydl_optsANIME) as ydl:
+                    ydl.download([animelink])
+                    
+                break
+            else:
+                print(f'{color.WARNING}Not a CrunchyRoll Link{color.END}')
 
 if __name__ == "__main__":
     # typer.run(app)
