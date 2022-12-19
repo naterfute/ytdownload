@@ -104,7 +104,7 @@ def audio(
 
 ########!VIDEO DOWNLOADER
 @app.command()
-def vidoe(
+def video(
     multiple: bool = typer.Option(False, '--multiple', '-m' , help='Insert Multiple Links to Download'),
     dpath: str = typer.Option(Video_File_Save, '--path', '-p', help='Temp Download Path'),
     subtitles: bool = typer.Option(False, '--subtitles', '-s', help='Download Subtitles Only'),
