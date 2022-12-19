@@ -31,5 +31,4 @@ I prefer Firefox, Log into your crunchroll account then run
     yt-dlp --cookies-from-browser firefox/chrome
 
 if you used chrome go into your variables.py file and find ***ydl_optsANIME***
-and change ./firefox to whatever directory your cookies are in.
-
+and change ./firefox to Whatever Directory your cookies are in.
