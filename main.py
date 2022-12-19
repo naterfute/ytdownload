@@ -44,7 +44,6 @@ def audio(
                     multiplelinks=input('')
                    
                     if 'https://www.youtube.com' in multiplelinks or 'https://youtu.be/' in multiplelinks or 'http://youtu.be' in multiplelinks or 'https://youtube.com' in multiplelinks or 'youtube.com' in multiplelinks:
-                        # yt = YouTube(f'{multiplelinks}')
 
                         if multiplelinks in youtubelinks:
                             print('Already in List')
@@ -58,7 +57,7 @@ def audio(
                     if multiplelinks == 'next' and incognito == True:
                         print('Downloading Audio Incognito')
                         for x in youtubelinks:
-                            with yt_dlp.YoutubeDL(ydl_optsA) as ydl:
+                            with yt_dlp.YoutubeDL(ydl_optsIAA) as ydl:
                                 ydl.download(x)
                     if multiplelinks == 'next' and subtitles == True:
                         print('Downloading Subtitles only')
@@ -105,22 +104,23 @@ def audio(
 
 ########!VIDEO DOWNLOADER
 @app.command()
-def video(
+def vidoe(
     multiple: bool = typer.Option(False, '--multiple', '-m' , help='Insert Multiple Links to Download'),
-    path: str = typer.Option(Video_File_Save, '--path', '-p', help='Temp Download Path'),
+    dpath: str = typer.Option(Video_File_Save, '--path', '-p', help='Temp Download Path'),
+    subtitles: bool = typer.Option(False, '--subtitles', '-s', help='Download Subtitles Only'),
     incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file')
           ):
+        downloadpath = environ['HOME']
         youtubelinks=[]
         link = True
         try:
-            pathExist = path.exists(path)
-            if path.exists(AudioArchive):
+            pathExist = path.exists(dpath)
+            if path.exists(VideoArchive):
                 pass
             else:
                 with open(f'{VideoArchive}', 'w') as f:
                     f.close()
                 pass
-
             if pathExist == False:
                 print('Path Does not exist')
                 exit(0)
@@ -136,10 +136,9 @@ def video(
                     multiplelinks=input('')
                    
                     if 'https://www.youtube.com' in multiplelinks or 'https://youtu.be/' in multiplelinks or 'http://youtu.be' in multiplelinks or 'https://youtube.com' in multiplelinks or 'youtube.com' in multiplelinks:
-                        # yt = YouTube(f'{multiplelinks}')
 
                         if multiplelinks in youtubelinks:
-                            print('already in list')
+                            print('Already in List')
                             
                         else:
                             youtubelinks.append(multiplelinks)
@@ -148,13 +147,19 @@ def video(
                         print('Not a valid youtube video')
 
                     if multiplelinks == 'next' and incognito == True:
-                        print('Downloading Video Incognito')
+                        print('Downloading Audio Incognito')
                         for x in youtubelinks:
                             with yt_dlp.YoutubeDL(ydl_optsIVA) as ydl:
                                 ydl.download(x)
+                    if multiplelinks == 'next' and subtitles == True:
+                        print('Downloading Subtitles only')
+                        for x in youtubelinks:
+                            with yt_dlp.YoutubeDL(ydl_optsVS) as ydl:
+                                ydl.download(x)         
+
                     
                     if multiplelinks == 'next':
-                        print('Downloading Video')
+                        print('Downloading Audio')
                         for x in youtubelinks:
                             with yt_dlp.YoutubeDL(ydl_optsV) as ydl:
                                 ydl.download(x)
@@ -166,12 +171,18 @@ def video(
                 
                 with yt_dlp.YoutubeDL(ydl_optsIVA) as ydl:
                     ydl.download(ytlink)
+            if subtitles:
+                print('Put Link Here')
+                subtitles = input('')
+                with yt_dlp.YoutubeDL(ydl_optsVS) as ydl:
+                    ydl.download(subtitles)
+                exit(0) 
                             
             if link:
                 while True:
                     ytlink=input('Insert One Link: ')
 
-                    if 'https://www.youtube.com' in ytlink or 'https://youtu.be/' in ytlink:
+                    if 'https://www.youtube.com' in ytlink or 'https://youtu.be/' in ytlink or 'http://youtu.be' in ytlink or 'https://youtube.com' in ytlink or 'youtube.com' in ytlink:
                         with yt_dlp.YoutubeDL(ydl_optsV) as ydl:
                             ydl.download([ytlink])
                         break
@@ -180,7 +191,7 @@ def video(
         except KeyboardInterrupt as e:
             print('\nKeyboard interrupt.')
         except FileNotFoundError as e:
-            print(e) 
+            print(e)
 
 if __name__ == "__main__":
     # typer.run(app)

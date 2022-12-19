@@ -138,6 +138,14 @@ ydl_optsAS = {
     
 }
 
+ydl_optsVS = {
+    'outtmpl': '{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
+    'writesubtitles': True,
+    'sublang': 'eng',
+    'subformat': 'json3',
+    
+}
+
 s18= ' ' * 18
 s20= ' ' * 20
 class color:
