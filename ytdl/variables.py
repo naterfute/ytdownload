@@ -1,14 +1,17 @@
 
 #! Figure out how to use yml files dumdum
-from os import environ
+from os import environ, getcwd
 #! user most Important
 downloadpath = environ['HOME']
+workingpath = getcwd()
 # downloadpath=os.path('~/home/')
 Audio_File_Save = f'{downloadpath}/Music/'
 Video_File_Save = f'{downloadpath}/Videos/'
 AudioArchive = f'{downloadpath}/Music/AudioArchive.txt'
 AudioSubtitleSave = f'{downloadpath}/Music/subtitles'
 VideoArchive = f'{downloadpath}/Videos/VideoArchive.txt'
+
+Anime_File_Save = f'{downloadpath}/Videos/'
 
 #* Classes
 
@@ -131,19 +134,21 @@ ydl_optsIVA = {'format': 'remux/best',
             }
 
 ydl_optsAS = {
-    'outtmpl': '{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
+    'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
     'writesubtitles': True,
     'sublang': 'eng',
-    'subformat': 'json3',
-    
+    'subformat': 'json3', 
 }
 
 ydl_optsVS = {
-    'outtmpl': '{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
+    'outtmpl': f'{Video_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
     'writesubtitles': True,
     'sublang': 'eng',
-    'subformat': 'json3',
-    
+    'subformat': 'json3',   
+}
+ydl_optsANIME = {
+    'outmpl': f'{Anime_File_Save}/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s',
+    'cookies': f'./firefox'
 }
 
 s18= ' ' * 18
