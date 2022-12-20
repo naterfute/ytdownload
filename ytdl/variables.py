@@ -12,6 +12,7 @@ AudioSubtitleSave = f'{downloadpath}/Music/subtitles'
 VideoArchive = f'{downloadpath}/Videos/VideoArchive.txt'
 
 Anime_File_Save = f'{downloadpath}/Videos/'
+AnimeArchive = f'{downloadpath}/Videos/AnimeArchive.txt'
 
 #* Classes
 
@@ -152,9 +153,10 @@ ydl_optsVS = {
 }
 ydl_optsANIME = {
     'outmpl': f'{Anime_File_Save}/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s',
-    # 'cookiefile': 'firefox',
+    'cookiesfile': 'firefox.txt',
     'logger': MyLogger(),
     'progress_hooks': [hook],
+    'download_archive': AnimeArchive,
     }
 
 s18= ' ' * 18

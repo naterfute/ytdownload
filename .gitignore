@@ -1,8 +1,6 @@
 .ytdcli
 .ytdlp
 ytdl/__pycache__/
-<<<<<<< HEAD
 firefox
-=======
-firefox
->>>>>>> master
+firefox.txt
+ytdl/firefox.txt
