@@ -24,7 +24,7 @@ To View all Sub Commands of either
     python main.py video --help
 
 ### Crunchroll
-To Download from crunchy roll you must get the cookies from your browser.
+To Download from crunchyroll you must get the cookies from your browser.
 To do that open up your browser of choice(must be google chrome or firefox)
 I prefer Firefox, Log into your crunchroll account then run 
 

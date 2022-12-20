@@ -232,9 +232,8 @@ def crunchyroll(
             animelink=input('Insert One Link: ')
             
             if 'crunchyroll.com' in animelink:
-                print('crunchyrollbeta.%(id)s')
                 with yt_dlp.YoutubeDL(ydl_optsANIME) as ydl:
-                    ydl.download([animelink])
+                    ydl.download(animelink)
                     
                 break
             else:

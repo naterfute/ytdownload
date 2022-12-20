@@ -36,7 +36,7 @@ class MyLogger:
 #* Functions
 
 
-def my_hook(d):
+def hook(d):
     if d['status'] == 'finished':
         print('Done downloading, now post-processing ...')
 
@@ -52,7 +52,7 @@ ydl_optsA = {
             'format': 'bestaudio/best',
             'writethumbnail': True,
             'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
-            'writesubtitles': True,
+            'writesubs': True,
             'sublang': 'eng',
             'subformat': 'json3',
             'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
@@ -61,7 +61,7 @@ ydl_optsA = {
             'writeautosubs': False,
             'ignoreerrors': True,
             'logger': MyLogger(),
-            'progress_hooks': [my_hook],
+            'progress_hooks': [hook],
             'noplaylist': True,
             'download_archive': AudioArchive,
             'parsemetadata': "${downloadTimestamp}:%(meta_download_date)s",
@@ -77,7 +77,7 @@ ydl_optsA = {
 ydl_optsIAA = {
             'format': 'bestaudio/best',
             'writethumbnail': True,
-            'writesubtitles': True,
+            'writesubs': True,
             'subtitle': 'write-sub sub-lang en sub-format json3',
             'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
             'breakonexisting': True,
@@ -85,7 +85,7 @@ ydl_optsIAA = {
             'writeautosubs': False,
             'ignoreerrors': True,
             'logger': MyLogger(),
-            'progress_hooks': [my_hook],
+            'progress_hooks': [hook],
             'noplaylist': True,
             'parsemetadata': "${downloadTimestamp}:%(meta_download_date)s",
             'parsemetadata': "%(release_date>%Y-%m-%d,upload_date>%Y-%m-%d)s:%(meta_publish_date)s",
@@ -98,13 +98,13 @@ ydl_optsIAA = {
         }            
 
 ydl_optsV = {'format': 'remux/best',
-            'writesubtitles': True,
+            'writesubs': True,
             'subtitle': '--write-sub --sub-lang en --sub-format json3',         
             'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
             'breakonexisting': True,
             'quite': True,
             'logger': MyLogger(),
-            'progress_hooks': [my_hook],
+            'progress_hooks': [hook],
             'ProgressTemplate': 'progress',
             'consoletitle': True,
             'download_archive': VideoArchive,
@@ -116,13 +116,13 @@ ydl_optsV = {'format': 'remux/best',
             ],
             }
 ydl_optsIVA = {'format': 'remux/best',
-            'writesubtitles': True,
+            'writesubs': True,
             'subtitle': '--write-sub --sub-lang en --sub-format json3',
             'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
             'breakonexisting': True,
             'quite': True,
             'logger': MyLogger(),
-            'progress_hooks': [my_hook],
+            'progress_hooks': [hook],
             'ProgressTemplate': 'progress',
             'consoletitle': True,
             'ignoreerrors': True,
@@ -135,21 +135,27 @@ ydl_optsIVA = {'format': 'remux/best',
 
 ydl_optsAS = {
     'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
-    'writesubtitles': True,
+    'writesubs': True,
     'sublang': 'eng',
     'subformat': 'json3', 
+    'logger': MyLogger(),
+    'progress_hooks': [hook],
 }
 
 ydl_optsVS = {
     'outtmpl': f'{Video_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
-    'writesubtitles': True,
+    'writesubs': True,
     'sublang': 'eng',
-    'subformat': 'json3',   
+    'subformat': 'json3',
+    'logger': MyLogger(),
+    'progress_hooks': [hook],
 }
 ydl_optsANIME = {
     'outmpl': f'{Anime_File_Save}/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s',
-    'cookies': f'./firefox'
-}
+    # 'cookiefile': 'firefox',
+    'logger': MyLogger(),
+    'progress_hooks': [hook],
+    }
 
 s18= ' ' * 18
 s20= ' ' * 20
