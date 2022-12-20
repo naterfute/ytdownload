@@ -11,7 +11,7 @@ AudioArchive = f'{downloadpath}/Music/AudioArchive.txt'
 AudioSubtitleSave = f'{downloadpath}/Music/subtitles'
 VideoArchive = f'{downloadpath}/Videos/VideoArchive.txt'
 
-Anime_File_Save = f'{downloadpath}/Videos/'
+Anime_File_Save = f'{downloadpath}/Videos/Anime'
 AnimeArchive = f'{downloadpath}/Videos/AnimeArchive.txt'
 
 #* Classes
