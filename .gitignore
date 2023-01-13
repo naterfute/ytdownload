@@ -1,7 +1,15 @@
 .ytdcli
 .ytdlp
+ytdl/config.py
 ytdl/__pycache__/
 firefox
 firefox.txt
 ytdl/firefox.txt
 Anime/
+anime/
+file/
+db.json
+cookies.txt
+config.yml
+__init__.py
+ytdl/version.py
