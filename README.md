@@ -24,7 +24,7 @@ To View all Sub Commands of either
     python main.py video --help
 
 ### Crunchroll
-####Please Note that the crunchyroll Downloader is not prefected and may not work as intended. I will accept any pull request that fixes it
+#### Please Note that the crunchyroll Downloader is not prefected and may not work as intended. I will accept any pull request that fixes it
 To Download from crunchyroll you must get the cookies from your browser.
 To do that open up your browser of choice(must be google chrome or firefox)
 I prefer Firefox, Log into your crunchroll account then run 
