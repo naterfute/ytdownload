@@ -1,6 +1,8 @@
 
 #! Figure out how to use yml files dumdum
 from os import environ, getcwd
+from .config import username, password
+import math
 #! user most Important
 downloadpath = environ['HOME']
 workingpath = getcwd()
@@ -18,8 +20,6 @@ AnimeArchive = f'{downloadpath}/Videos/AnimeArchive.txt'
 
 class MyLogger:
     def debug(self, msg):
-        # For compatibility with youtube-dl, both debug and info are passed into debug
-        # You can distinguish them by the prefix '[debug] '
         if msg.startswith('[debug] '):
             pass
         else:
@@ -36,13 +36,25 @@ class MyLogger:
         
 #* Functions
 
+def convert_size(size_bytes):
+   if size_bytes == 0:
+       return "0B"
+   size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+   i = int(math.floor(math.log(size_bytes, 1024)))
+   p = math.pow(1024, i)
+   s = round(size_bytes / p, 2)
+   return "%s %s" % (s, size_name[i])
 
 def hook(d):
     if d['status'] == 'finished':
         print('Done downloading, now post-processing ...')
 
     if d['status'] == 'downloading':
+        currentlydownloaded=d['downloaded_bytes']
+        total_bytes_download=d['total_bytes']
+        print(f'{COLOR.Green}{convert_size(currentlydownloaded)}{COLOR.Blue}/{COLOR.Green}{convert_size(total_bytes_download)}{COLOR.Default}')
         print(d['_percent_str'], d['_eta_str'])
+    
         
     
 #* Classes
@@ -65,9 +77,6 @@ ydl_optsA = {
             'progress_hooks': [hook],
             'noplaylist': True,
             'download_archive': AudioArchive,
-            'parsemetadata': "${downloadTimestamp}:%(meta_download_date)s",
-            'parsemetadata': "%(release_date>%Y-%m-%d,upload_date>%Y-%m-%d)s:%(meta_publish_date)s",
-            'embedmeatdata': True,
             'postprocessors':[
             {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': '320'},
             {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
@@ -88,9 +97,6 @@ ydl_optsIAA = {
             'logger': MyLogger(),
             'progress_hooks': [hook],
             'noplaylist': True,
-            'parsemetadata': "${downloadTimestamp}:%(meta_download_date)s",
-            'parsemetadata': "%(release_date>%Y-%m-%d,upload_date>%Y-%m-%d)s:%(meta_publish_date)s",
-            'embedmeatdata': True,
             'postprocessors':[
             {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': '320'},
             {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
@@ -151,13 +157,16 @@ ydl_optsVS = {
     'logger': MyLogger(),
     'progress_hooks': [hook],
 }
-ydl_optsANIME = {
-    'outmpl': f'{Anime_File_Save}/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s',
-    'cookiesfile': 'firefox.txt',
-    'logger': MyLogger(),
-    'progress_hooks': [hook],
-    'download_archive': AnimeArchive,
+ydl_optsANIMEDUB = {
+    'cookiefile': 'cookies.txt',
+    'hardsub': 'en'
     }
+ydl_optsANIMESUB = {
+    'username': f'{username}',
+    'password': f'{password}',
+    'hardsub': 'en'
+    }
+
 
 s18= ' ' * 18
 s20= ' ' * 20
