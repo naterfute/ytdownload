@@ -5,13 +5,10 @@ import math
 #! user most Important
 downloadpath = environ['HOME']
 workingpath = getcwd()
-# downloadpath=os.path('~/home/')
 Audio_File_Save = f'{downloadpath}/Music/Downloaded'
 Video_File_Save = f'{downloadpath}/Videos/'
 AudioArchive = f'{downloadpath}/Music/AudioArchive.txt'
-AudioSubtitleSave = f'{downloadpath}/Music/subtitles'
 VideoArchive = f'{downloadpath}/Videos/VideoArchive.txt'
-
 Anime_File_Save = f'{downloadpath}/Videos/Anime'
 AnimeArchive = f'{downloadpath}/Videos/AnimeArchive.txt'
 
@@ -162,11 +159,6 @@ ydl_optsANIME = {
     'logger': MyLogger(),
     'progress_hooks': [hook],
     'download_archive': AnimeArchive,
-    }
-ydl_optsANIMESUB = {
-    'username': f'{username}',
-    'password': f'{password}',
-    'hardsub': 'en'
     }
 
 
