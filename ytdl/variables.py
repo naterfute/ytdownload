@@ -1,13 +1,12 @@
 
 #! Figure out how to use yml files dumdum
 from os import environ, getcwd
-from .config import username, password
 import math
 #! user most Important
 downloadpath = environ['HOME']
 workingpath = getcwd()
 # downloadpath=os.path('~/home/')
-Audio_File_Save = f'{downloadpath}/Music/'
+Audio_File_Save = f'{downloadpath}/Music/Downloaded'
 Video_File_Save = f'{downloadpath}/Videos/'
 AudioArchive = f'{downloadpath}/Music/AudioArchive.txt'
 AudioSubtitleSave = f'{downloadpath}/Music/subtitles'
@@ -157,9 +156,12 @@ ydl_optsVS = {
     'logger': MyLogger(),
     'progress_hooks': [hook],
 }
-ydl_optsANIMEDUB = {
-    'cookiefile': 'cookies.txt',
-    'hardsub': 'en'
+ydl_optsANIME = {
+    'outmpl': f'{Anime_File_Save}/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s',
+    'cookiesfile': f'{downloadpath}/bin/firefox.txt',
+    'logger': MyLogger(),
+    'progress_hooks': [hook],
+    'download_archive': AnimeArchive,
     }
 ydl_optsANIMESUB = {
     'username': f'{username}',
