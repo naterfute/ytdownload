@@ -192,6 +192,7 @@ def video(
             print('\nKeyboard interrupt.')
         except FileNotFoundError as e:
             print(e)
+
 ###! Anime Downlaoder
 @app.command()
 def crunchyroll(
