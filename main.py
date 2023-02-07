@@ -3,7 +3,6 @@ import yt_dlp, typer, rich, click
 from os import path, mkdir
 from sys import exit
 from ytdl.variables import *
-from ytdl.version import __version__
 from rich.console import Console
 
 class NaturalOrderGroup(click.Group):
