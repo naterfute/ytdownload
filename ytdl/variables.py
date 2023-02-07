@@ -1,11 +1,12 @@
 
 #! Figure out how to use yml files dumdum
 from os import environ, getcwd
+import math
 #! user most Important
 downloadpath = environ['HOME']
 workingpath = getcwd()
 # downloadpath=os.path('~/home/')
-Audio_File_Save = f'{downloadpath}/Music/'
+Audio_File_Save = f'{downloadpath}/Music/Downloaded'
 Video_File_Save = f'{downloadpath}/Videos/'
 AudioArchive = f'{downloadpath}/Music/AudioArchive.txt'
 AudioSubtitleSave = f'{downloadpath}/Music/subtitles'
@@ -36,12 +37,23 @@ class MyLogger:
         
 #* Functions
 
+def convert_size(size_bytes):
+   if size_bytes == 0:
+       return "0B"
+   size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+   i = int(math.floor(math.log(size_bytes, 1024)))
+   p = math.pow(1024, i)
+   s = round(size_bytes / p, 2)
+   return "%s %s" % (s, size_name[i])
 
 def hook(d):
     if d['status'] == 'finished':
         print('Done downloading, now post-processing ...')
 
     if d['status'] == 'downloading':
+        currentlydownloaded=d['downloaded_bytes']
+        total_bytes_download=d['total_bytes']
+        print(f'{COLOR.Green}{convert_size(currentlydownloaded)}{COLOR.Blue}/{COLOR.Green}{convert_size(total_bytes_download)}{COLOR.Default}')
         print(d['_percent_str'], d['_eta_str'])
         
     
@@ -153,7 +165,7 @@ ydl_optsVS = {
 }
 ydl_optsANIME = {
     'outmpl': f'{Anime_File_Save}/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s',
-    'cookiesfile': 'firefox.txt',
+    'cookiesfile': f'{downloadpath}/bin/firefox.txt',
     'logger': MyLogger(),
     'progress_hooks': [hook],
     'download_archive': AnimeArchive,
