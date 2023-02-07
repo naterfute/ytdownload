@@ -19,8 +19,6 @@ AnimeArchive = f'{downloadpath}/Videos/AnimeArchive.txt'
 
 class MyLogger:
     def debug(self, msg):
-        # For compatibility with youtube-dl, both debug and info are passed into debug
-        # You can distinguish them by the prefix '[debug] '
         if msg.startswith('[debug] '):
             pass
         else:
@@ -55,6 +53,7 @@ def hook(d):
         total_bytes_download=d['total_bytes']
         print(f'{COLOR.Green}{convert_size(currentlydownloaded)}{COLOR.Blue}/{COLOR.Green}{convert_size(total_bytes_download)}{COLOR.Default}')
         print(d['_percent_str'], d['_eta_str'])
+    
         
     
 #* Classes
@@ -77,9 +76,6 @@ ydl_optsA = {
             'progress_hooks': [hook],
             'noplaylist': True,
             'download_archive': AudioArchive,
-            'parsemetadata': "${downloadTimestamp}:%(meta_download_date)s",
-            'parsemetadata': "%(release_date>%Y-%m-%d,upload_date>%Y-%m-%d)s:%(meta_publish_date)s",
-            'embedmeatdata': True,
             'postprocessors':[
             {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': '320'},
             {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
@@ -100,9 +96,6 @@ ydl_optsIAA = {
             'logger': MyLogger(),
             'progress_hooks': [hook],
             'noplaylist': True,
-            'parsemetadata': "${downloadTimestamp}:%(meta_download_date)s",
-            'parsemetadata': "%(release_date>%Y-%m-%d,upload_date>%Y-%m-%d)s:%(meta_publish_date)s",
-            'embedmeatdata': True,
             'postprocessors':[
             {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': '320'},
             {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
@@ -170,6 +163,12 @@ ydl_optsANIME = {
     'progress_hooks': [hook],
     'download_archive': AnimeArchive,
     }
+ydl_optsANIMESUB = {
+    'username': f'{username}',
+    'password': f'{password}',
+    'hardsub': 'en'
+    }
+
 
 s18= ' ' * 18
 s20= ' ' * 20
