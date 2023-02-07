@@ -1,10 +1,20 @@
 #!/usr/bin/python3.10
-
-import yt_dlp, typer
+import yt_dlp, typer, rich, click
 from os import path, mkdir
 from sys import exit
 from ytdl.variables import *
-app = typer.Typer(add_completion=False)
+from ytdl.version import __version__
+from rich.console import Console
+
+class NaturalOrderGroup(click.Group):
+    def list_commands(self, ctx):
+        return self.commands.keys()        
+    
+
+workingpath = getcwd()
+app = typer.Typer(cls=NaturalOrderGroup)
+console = Console()
+
 
 def main():
     pass
@@ -18,6 +28,7 @@ def audio(
     subtitles: bool = typer.Option(False, '--subtitles', '-s', help='Download Subtitles Only'),
     incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file')
           ):
+        '''Downloads Youtube Videos as mp3'''
         downloadpath = environ['HOME']
         youtubelinks=[]
         link = True
@@ -64,7 +75,6 @@ def audio(
                         for x in youtubelinks:
                             with yt_dlp.YoutubeDL(ydl_optsAS) as ydl:
                                 ydl.download(x)         
-
                     
                     if multiplelinks == 'next':
                         print('Downloading Audio')
@@ -110,6 +120,7 @@ def video(
     subtitles: bool = typer.Option(False, '--subtitles', '-s', help='Download Subtitles Only'),
     incognito: bool = typer.Option(False, '--incognito', '-i', help='Download files without writing to the Archive file')
           ):
+        '''Downloads Youtube Videos as mp4'''
         downloadpath = environ['HOME']
         youtubelinks=[]
         link = True
@@ -197,8 +208,11 @@ def video(
 @app.command()
 def crunchyroll(
     dpath: str = typer.Option(Anime_File_Save, '--path', '-p'),
-    multiple: bool = typer.Option(False, '--multiple', '-m', help='Insert Multiple Links to Download')
+    multiple: bool = typer.Option(False, '--multiple', '-m', help='Insert Multiple Links to Download'),
+    dub: bool = typer.Option(True, '--dub', '-d', help='Download Crunchyroll Dubbed'),
+    sub: bool = typer.Option(False, '--sub', '-s', help='Download Crunchyroll Subbed'),
 ):
+    '''Downloads Crunchyroll Links(As Long as you have an account!)'''
     link = True
     animelinks = []
     pathExist = path.exists(dpath)
@@ -215,13 +229,17 @@ def crunchyroll(
         print('path Exists, Continuing ')
     if multiple:
         print('Input links')
-        
+
         while True:
             
             multiplelinks = input('')
             
             if multiple == 'next':
                 print('Downloading')
+                if dub:
+                    print('Downloading Dubbed')
+                if sub:
+                    print('Downloading Subbed')
             if 'crunchyroll.com' in multiplelinks:
                 if multiplelinks in animelinks:
                     print('Already in List')
@@ -233,13 +251,23 @@ def crunchyroll(
             animelink=input('Insert One Link: ')
             
             if 'crunchyroll.com' in animelink:
-                with yt_dlp.YoutubeDL(ydl_optsANIME) as ydl:
-                    ydl.download(animelink)
-                    
+                if dub:
+                    with yt_dlp.YoutubeDL(ydl_optsANIMEDUB) as ydl:
+                        ydl.download(animelink)
+                if sub:
+                    with yt_dlp.YoutubeDL(ydl_optsANIMESUB) as ydl:
+                        ydl.download(animelink)
                 break
             else:
                 print(f'{color.WARNING}Not a CrunchyRoll Link{color.END}')
 
+@app.command()
+def version() -> None:
+    """Show project Version."""
+    # typer.secho(f"project Version: {__version__}", fg=typer.colors.BRIGHT_GREEN)
+
+    console.print(f"project Version: {__version__}", style="bold green")
+        
+
 if __name__ == "__main__":
-    # typer.run(app)
     app()
