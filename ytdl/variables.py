@@ -162,6 +162,7 @@ ydl_optsANIME = {
 
 s18= ' ' * 18
 s20= ' ' * 20
+
 class color:
    HEADER = '\033[95m' 
    PURPLE = '\033[95m'
