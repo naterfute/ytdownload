@@ -51,8 +51,6 @@ def hook(d):
         print(f'{COLOR.Green}{convert_size(currentlydownloaded)}{COLOR.Blue}/{COLOR.Green}{convert_size(total_bytes_download)}{COLOR.Default}')
         print(d['_percent_str'], d['_eta_str'])
     
-        
-    
 #* Classes
     
 #* Multi-Line Variables
