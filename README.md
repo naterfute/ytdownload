@@ -4,7 +4,9 @@ Terminal Youtube Downloader using YT-DLP
 ## Setup
     git clone https://github.com/KalebSchmidlkofer/ytdownload.git
 #### Its best practice to create a virtual enviorment
-    python -m venv <venvname>
+    python -m venv venv
+    
+    source venv/bin/activate
 
     pip install -r requirements.txt
     
