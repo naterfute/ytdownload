@@ -15,7 +15,8 @@ app = typer.Typer(cls=NaturalOrderGroup, add_completion=False)
 def download(ydlopts, links):
   for x in links:
     with yt_dlp.YoutubeDL(ydlopts) as ydl:
-      ydl.download(x)
+      #* Set up so that if playlist = NA change download path 
+        ydl.download(x)
 
 @app.command()
 def audio(
@@ -27,6 +28,7 @@ def audio(
     download(ydl_optsIAA, ytlink)
   else:
     download(ydl_optsA, ytlink)
+
 #######! VIDEO DOWNLOADER
 @app.command()
 def video(
