@@ -47,6 +47,7 @@ def audio(
             if multiple:
                 print('Insert links to download')
                 print('Put Links Here')
+                print('Type next to continue')
             
                 while True:
             
@@ -139,6 +140,7 @@ def video(
             if multiple:
                 print('Insert links to download')
                 print('Put Links Here')
+                print('Type next to continue')
             
                 while True:
             
