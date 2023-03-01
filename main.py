@@ -9,7 +9,6 @@ class NaturalOrderGroup(click.Group):
     def list_commands(self, ctx):
         return self.commands.keys()        
     
-
 workingpath = getcwd()
 app = typer.Typer(cls=NaturalOrderGroup)
 console = Console()
