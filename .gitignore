@@ -14,4 +14,3 @@ config.yml
 __init__.py
 ytdl/version.py
 test.py
-test.py
