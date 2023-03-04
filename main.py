@@ -4,6 +4,7 @@ from ytdl.variables import *
 import typer, rich, click
 from typing import Optional, List, Tuple
 import sys
+import json
 class NaturalOrderGroup(click.Group):
     def list_commands(self, ctx):
         return self.commands.keys()        
@@ -14,8 +15,14 @@ app = typer.Typer(cls=NaturalOrderGroup, add_completion=False)
 #######! AUDIO DOWNLOADER
 def download(ydlopts, links):
   for x in links:
+
     with yt_dlp.YoutubeDL(ydlopts) as ydl:
       #* Set up so that if playlist = NA change download path 
+        info = ydl.extract_info(x, download = False)
+        info = json.dumps(ydl.sanitize_info(info))
+        json_dict = json.loads(info)
+        title = json_dict['title']
+        print(title)
         ydl.download(x)
 
 @app.command()
