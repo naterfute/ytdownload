@@ -17,17 +17,17 @@ def download(ydlopts, links):
   for x in links:
 
     with yt_dlp.YoutubeDL(ydlopts) as ydl:
-      #* Set up so that if playlist = NA change download path 
-        info = ydl.extract_info(x, download = False)
-        info = json.dumps(ydl.sanitize_info(info))
-        json_dict = json.loads(info)
-        title = json_dict['title']
-        print(title)
+      # * Set up so that if playlist = NA change download path 
+        # info = ydl.extract_info(x, download = False)
+        # info = json.dumps(ydl.sanitize_info(info))
+        # json_dict = json.loads(info)
+        # title = json_dict['title']
+        # print(title)
         ydl.download(x)
 
 @app.command()
 def audio(
-  ytlink: Optional[list[str]] = typer.Option(None, '-yt', '--ytlink'),
+  ytlink: Optional[list[str]] = typer.Option(None, '-l', '--link'),
   incognito: bool = typer.Option(False, '-i', '--incognito'),
   ):
   if incognito:
@@ -39,7 +39,7 @@ def audio(
 #######! VIDEO DOWNLOADER
 @app.command()
 def video(
-  ytlink: Optional[list[str]] = typer.Option(None, '-yt', '--ytlink'),
+  ytlink: Optional[list[str]] = typer.Option(None, '-l', '--link'),
   incognito: bool = typer.Option(False, '-i', '--incognito')
 ):
   if incognito:

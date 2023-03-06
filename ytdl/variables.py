@@ -33,8 +33,10 @@ class MyLogger:
 #* Functions
 
 def convert_size(size_bytes):
+   if not isinstance(size_bytes, (int, float)):
+       raise TypeError("Input must be a numeric value")
    if size_bytes == 0:
-       return "0B"
+       return "0B" 
    size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
    i = int(math.floor(math.log(size_bytes, 1024)))
    p = math.pow(1024, i)
@@ -46,9 +48,9 @@ def hook(d):
         print('Done downloading, now post-processing ...')
 
     if d['status'] == 'downloading':
-        currentlydownloaded=d['downloaded_bytes']
-        total_bytes_download=d['total_bytes']
-        print(f'{COLOR.Green}{convert_size(currentlydownloaded)}{COLOR.Blue}/{COLOR.Green}{convert_size(total_bytes_download)}{COLOR.Default}')
+        # currentlydownloaded=d['downloaded_bytes']
+        # total_bytes_download=d['filesize']
+        # print(f'{COLOR.Green}{convert_size(currentlydownloaded)}{COLOR.Blue}/{COLOR.Green}{convert_size(total_bytes_download)}{COLOR.Default}')
         print(d['_percent_str'], d['_eta_str'])
     
 #* Multi-Line Variables
