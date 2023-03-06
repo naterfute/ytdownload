@@ -14,11 +14,11 @@ Terminal Youtube Downloader using YT-DLP
 ### WIP
 In order to use the links you must do :
 
-    python main.py -yt "https://www.youtube.com/watch?v=dQw4w9WgXcQ&" or -yt 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&'
+    python main.py -l "https://www.youtube.com/watch?v=dQw4w9WgXcQ&" or -yt 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&'
 
 if you dont and instead run this:
 
-    python main.py -yt https://www.youtube.com/watch?v=dQw4w9WgXcQ&
+    python main.py -l https://www.youtube.com/watch?v=dQw4w9WgXcQ&
 
 you will get an error like this:
 
