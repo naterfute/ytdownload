@@ -13,40 +13,28 @@ workingpath = getcwd()
 app = typer.Typer(cls=NaturalOrderGroup, add_completion=False)
 
 #######! AUDIO DOWNLOADER
-def download(ydlopts, links):
-  for x in links:
-
-    with yt_dlp.YoutubeDL(ydlopts) as ydl:
-      # * Set up so that if playlist = NA change download path 
-        # info = ydl.extract_info(x, download = False)
-        # info = json.dumps(ydl.sanitize_info(info))
-        # json_dict = json.loads(info)
-        # title = json_dict['title']
-        # print(title)
-        ydl.download(x)
-
 @app.command()
 def audio(
-  ytlink: Optional[list[str]] = typer.Option(None, '-l', '--link'),
+  link: Optional[list[str]] = typer.Option(None, '-l', '--link'),
   incognito: bool = typer.Option(False, '-i', '--incognito'),
   ):
   if incognito:
     print('Running incognito')
-    download(ydl_optsIAA, ytlink)
+    youtube.download(ydl_optsIAA, link)
   else:
-    download(ydl_optsA, ytlink)
+    youtube.download(ydl_optsA, link)
 
 #######! VIDEO DOWNLOADER
 @app.command()
 def video(
-  ytlink: Optional[list[str]] = typer.Option(None, '-l', '--link'),
+  link: Optional[list[str]] = typer.Option(None, '-l', '--link'),
   incognito: bool = typer.Option(False, '-i', '--incognito')
 ):
   if incognito:
     print('Running incognito')
-    download(ydl_optsIVA, ytlink)
+    youtube.download(ydl_optsIVA, link)
   else:
-    download(ydl_optsV, ytlink)
+    youtube.download(ydl_optsV, link)
 
 if __name__ == "__main__":
   app()
