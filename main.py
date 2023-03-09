@@ -7,7 +7,7 @@ import sys
 import json
 class NaturalOrderGroup(click.Group):
     def list_commands(self, ctx):
-        return self.commands.keys()        
+        return self.commands.keys()
 
 workingpath = getcwd()
 app = typer.Typer(cls=NaturalOrderGroup, add_completion=False)

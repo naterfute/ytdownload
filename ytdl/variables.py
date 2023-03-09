@@ -57,7 +57,7 @@ class youtube(object):
     def download(ydlopts, links):
       with yt_dlp.YoutubeDL(ydlopts) as ydl:
         for x in links:
-          #* Set up so that if playlist = NA change download path 
+          #* Set up so that if playlist = NA change download! path
           youtube.title(ydl, x)
           ydl.download([x])
 
