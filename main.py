@@ -5,14 +5,18 @@ import typer, rich, click
 from typing import Optional, List, Tuple
 import sys
 import json
+
+
 class NaturalOrderGroup(click.Group):
     def list_commands(self, ctx):
         return self.commands.keys()
 
+
 workingpath = getcwd()
 app = typer.Typer(cls=NaturalOrderGroup, add_completion=False)
 
-#######! AUDIO DOWNLOADER
+
+# AUDIO DOWNLOADER
 @app.command()
 def audio(
   link: Optional[list[str]] = typer.Option(None, '-l', '--link'),
@@ -24,7 +28,8 @@ def audio(
   else:
     youtube.download(ydl_optsA, link)
 
-#######! VIDEO DOWNLOADER
+
+# VIDEO DOWNLOADER
 @app.command()
 def video(
   link: Optional[list[str]] = typer.Option(None, '-l', '--link'),
@@ -35,6 +40,7 @@ def video(
     youtube.download(ydl_optsIVA, link)
   else:
     youtube.download(ydl_optsV, link)
+
 
 if __name__ == "__main__":
   app()
