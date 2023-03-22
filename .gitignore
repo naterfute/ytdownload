@@ -1,3 +1,4 @@
-.ytdcli
+.ytdcli/
+.venv/
 test.py
 ytdl/__pycache__/
