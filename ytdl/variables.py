@@ -1,26 +1,17 @@
-
-#! Figure out how to use yml files dumdum
 from os import environ, getcwd
 from sys import platform
 import math, json, yt_dlp
-#! user most Important
-if not platform == 'win32':
-  downloadpath = environ['HOME']
-  workingpath = getcwd()
-  Audio_File_Save = f'{downloadpath}/Music/Downloaded'
-  Video_File_Save = f'{downloadpath}/Videos/'
-  AudioArchive = f'{downloadpath}/Music/AudioArchive.txt'
-  VideoArchive = f'{downloadpath}/Videos/VideoArchive.txt'
-  Anime_File_Save = f'{downloadpath}/Videos/Anime'
-  AnimeArchive = f'{downloadpath}/Videos/AnimeArchive.txt'
-else:
-  workingpath = getcwd()
-  Audio_File_Save = f'{workingpath}\\Music'
-  Video_File_Save = f'{workingpath}\\Videos\\'
-  AudioArchive = f'{workingpath}\\Music\\AudioArchive.txt'
-  VideoArchive = f'{workingpath}\\Videos\\VideoArchive.txt'
-  Anime_File_Save = f'{workingpath}\\Videos\\Anime'
-  AnimeArchive = f'{workingpath}\\Videos\\AnimeArchive.txt'
+import yaml
+with open('config.yml') as f:
+  config = yaml.safe_load(f)
+Audio_File_Save = config['AUDIO']['path']
+AudioArchive = config['AUDIO']['archive']
+Video_File_Save = config['VIDEO']['path']
+VideoArchive = config['VIDEO']['archive']
+downloadpath = environ['HOME']
+workingpath = getcwd()
+Anime_File_Save = f'{downloadpath}/Videos/Anime'
+AnimeArchive = f'{downloadpath}/Videos/AnimeArchive.txt'
 
 #* Classes
 
