@@ -1,8 +1,32 @@
-from os import environ, getcwd
+from os import environ, getcwd, path
 from sys import platform
 import math, json, yt_dlp
 import yaml
 try:
+  if not path.isfile(f'./config.yml'):
+    with open('config.yml', 'w') as f:
+      f.write('''
+AUDIO:
+  # Leave field blanks for the directory that your script is located
+  # EXAMPLE: 
+  # path: /home/user/Music/download/
+  # In this example archive would go to /home/user/Music/AudioArchive.txt
+  # archive: AudioArchive.txt
+
+  path: 
+  archive: 
+
+
+VIDEO:
+  # Leave field blanks for the directory that your script is located
+  # EXAMPLE: 
+  # path: /home/user/Videos/downloaded/
+  # In this example archive would go to /home/user/Videos/VideoArchive.txt
+  # archive: VideoArchive.txt
+
+  path: 
+  archive: 
+      ''')
   with open('config.yml') as f:
     config = yaml.safe_load(f)
   Audio_File_Save = config['AUDIO']['path']

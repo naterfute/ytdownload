@@ -1,13 +1,9 @@
 #!/usr/bin/python3.10
-import os.path
 import yt_dlp
 from ytdl.variables import *
 import typer, click
 from typing import Optional, List, Tuple
-import yaml
 
-with open('config.yml') as f:
-  config = yaml.safe_load(f)
 
 class NaturalOrderGroup(click.Group):
   def list_commands(self, ctx):

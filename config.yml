@@ -1,3 +1,4 @@
+
 AUDIO:
   # Leave field blanks for the directory that your script is located
   # EXAMPLE: 
@@ -5,8 +6,9 @@ AUDIO:
   # In this example archive would go to /home/user/Music/AudioArchive.txt
   # archive: AudioArchive.txt
 
-  path:
-  archive:
+  path: 
+  archive: 
+
 
 VIDEO:
   # Leave field blanks for the directory that your script is located
@@ -15,6 +17,6 @@ VIDEO:
   # In this example archive would go to /home/user/Videos/VideoArchive.txt
   # archive: VideoArchive.txt
 
-  path:
-  archive:
-
+  path: 
+  archive: 
+      
