@@ -5,9 +5,10 @@ AUDIO:
   # In this example archive would go to /home/user/Music/AudioArchive.txt
   # archive: AudioArchive.txt
 
+  # path: /home/kaleb/Music/Downloaded
+  # archive: /home/kaleb/Music/AudioArchive.txt
   path:
   archive:
-
 
 VIDEO:
   # Leave field blanks for the directory that your script is located
@@ -16,5 +17,8 @@ VIDEO:
   # In this example archive would go to /home/user/Videos/VideoArchive.txt
   # archive: VideoArchive.txt
 
+  # path: /home/kaleb/Videos/Downloaded
+  # archive: /home/kaleb/Videos/VideoArchive.txt
   path:
   archive:
+
