@@ -14,7 +14,6 @@ Anime_File_Save = f'{downloadpath}/Videos/Anime'
 AnimeArchive = f'{downloadpath}/Videos/AnimeArchive.txt'
 
 #* Classes
-
 class MyLogger:
   def debug(self, msg):
     if msg.startswith('[debug] '):
@@ -70,114 +69,108 @@ class youtube(object):
 
       if d['status'] == 'downloading':
         global currently_downloaded
+        d.get('')
         currently_downloaded = d.get('downloaded_bytes')
-        print(f'{COLOR.Green}{youtube.convert_size(currently_downloaded)}{COLOR.Blue}/{COLOR.Green}{youtube.convert_size(filesize)}{COLOR.Default}')
+        # print(f'{COLOR.Green}{youtube.convert_size(currently_downloaded)}{COLOR.Blue}/{COLOR.Green}{youtube.convert_size(filesize)}{COLOR.Default}')
         print(d['_percent_str'], d['_eta_str'])
 
 #* Multi-Line Variables
 
-ydl_optsA = {
-  'format': 'bestaudio/best',
-  'writethumbnail': True,
-  'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
-  'writesubs': True,
-  'sublang': 'eng',
-  'subformat': 'json3',
-  'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
-  'breakonexisting': True,
-  'ProgressTemplate': 'progress',
-  'writeautosubs': False,
-  'ignoreerrors': True,
-  'logger': MyLogger(),
-  'progress_hooks': [youtube.hook],
-  'noplaylist': True,
-  'download_archive': AudioArchive,
-  'postprocessors':[
-  {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': '320'},
-  {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
-  {'key': 'EmbedThumbnail','already_have_thumbnail': True,}
-  ],
-}            
-
-ydl_optsIAA = {
-  'format': 'bestaudio/best',
-  'writethumbnail': True,
-  'writesubs': True,
-  'subtitle': 'write-sub sub-lang en sub-format json3',
-  'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
-  'breakonexisting': True,
-  'ProgressTemplate': 'progress',
-  'writeautosubs': False,
-  'ignoreerrors': True,
-  'logger': MyLogger(),
-  'progress_hooks': [youtube.hook],
-  'noplaylist': True,
-  'postprocessors':[
-  {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': '320'},
-  {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
-  {'key': 'EmbedThumbnail','already_have_thumbnail': True,}
-  ],
-}            
-
-ydl_optsV = {
-  'format': 'remux/best',
-  'writesubs': True,
-  'subtitle': '--write-sub --sub-lang en --sub-format json3',         
-  'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
-  'breakonexisting': True,
-  'quite': True,
-  'logger': MyLogger(),
-  'progress_hooks': [youtube.hook],
-  'ProgressTemplate': 'progress',
-  'consoletitle': True,
-  'download_archive': VideoArchive,
-  'ignoreerrors': True,
-  'postprocessors':[
-  {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': '1080'},
-  {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
-  {'key': 'EmbedThumbnail','already_have_thumbnail': False,}
-  ],
-}
-ydl_optsIVA = {
-  'format': 'remux/best',
-  'writesubs': True,
-  'subtitle': '--write-sub --sub-lang en --sub-format json3',
-  'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
-  'breakonexisting': True,
-  'quite': True,
-  'logger': MyLogger(),
-  'progress_hooks': [youtube.hook],
-  'ProgressTemplate': 'progress',
-  'consoletitle': True,
-  'ignoreerrors': True,
-  'postprocessors':[
-  {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': '1080'},
-  {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
-  {'key': 'EmbedThumbnail','already_have_thumbnail': False,}
-  ],
-}
-ydl_optsANIME = {
-  'format': 'remux/best',
-  'write-subs': True,
-  'subtitle': 'write-sub sub-lang *en* sub-format json3',
-  'sublang': '*en*',
-  'subformat': 'json3',
-  'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
-  'breakonexisting': True,
-  'quite': True,
-  'logger': MyLogger(),
-  'progress_hooks': [youtube.hook],
-  'ProgressTemplate': 'progress',
-  'consoletitle': True,
-  'ignoreerrors': True,
-  'postprocessors':[
-  {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': '1080'},
-  {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
-  {'key': 'EmbedThumbnail','already_have_thumbnail': False,}
-  ],
-    
-
-}
+class AUDIO(object):
+  DEFAULT = {
+    'format': 'bestaudio/best',
+    'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
+    'writethumbnail': True,
+    'breakonexisting': True,
+    'ProgressTemplate': 'progress',
+    'ignoreerrors': True,
+    'logger': MyLogger(),
+    'progress_hooks': [youtube.hook],
+    'noplaylist': True,
+    'download_archive': AudioArchive,
+    'postprocessors':[
+    {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': '320'},
+    {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
+    {'key': 'EmbedThumbnail','already_have_thumbnail': True,}
+    ],
+  }            
+  INCOGNITO = {
+    'format': 'bestaudio/best',
+    'writethumbnail': True,
+    'writesubs': True,
+    'subtitle': 'write-sub sub-lang en sub-format json3',
+    'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s',
+    'breakonexisting': True,
+    'ProgressTemplate': 'progress',
+    'writeautosubs': False,
+    'ignoreerrors': True,
+    'logger': MyLogger(),
+    'progress_hooks': [youtube.hook],
+    'noplaylist': True,
+    'postprocessors':[
+    {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': '320'},
+    {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
+    {'key': 'EmbedThumbnail','already_have_thumbnail': True,}
+    ],
+  }            
+class VIDEO(object):
+  DEFAULT = {
+    'format': 'remux/best',
+    'writesubs': True,
+    'subtitle': '--write-sub --sub-lang en --sub-format json3',         
+    'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
+    'breakonexisting': True,
+    'quite': True,
+    'logger': MyLogger(),
+    'progress_hooks': [youtube.hook],
+    'ProgressTemplate': 'progress',
+    'consoletitle': True,
+    'download_archive': VideoArchive,
+    'ignoreerrors': True,
+    'postprocessors':[
+    {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': '1080'},
+    {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
+    {'key': 'EmbedThumbnail','already_have_thumbnail': False,}
+    ],
+  }
+  INCOGNITO = {
+    'format': 'remux/best',
+    'writesubs': True,
+    'subtitle': '--write-sub --sub-lang en --sub-format json3',
+    'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
+    'breakonexisting': True,
+    'quite': True,
+    'logger': MyLogger(),
+    'progress_hooks': [youtube.hook],
+    'ProgressTemplate': 'progress',
+    'consoletitle': True,
+    'ignoreerrors': True,
+    'postprocessors':[
+    {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': '1080'},
+    {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
+    {'key': 'EmbedThumbnail','already_have_thumbnail': False,}
+    ],
+  }
+class anime:
+  ydl_optsANIME = {
+    'format': 'remux/best',
+    'write-subs': True,
+    'subtitle': 'write-sub sub-lang *en* sub-format json3',
+    'sublang': '*en*',
+    'subformat': 'json3',
+    'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
+    'breakonexisting': True,
+    'quite': True,
+    'logger': MyLogger(),
+    'progress_hooks': [youtube.hook],
+    'ProgressTemplate': 'progress',
+    'consoletitle': True,
+    'ignoreerrors': True,
+    'postprocessors':[
+    {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': '1080'},
+    {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
+    {'key': 'EmbedThumbnail','already_have_thumbnail': False,}
+    ]}
 
 
 class COLOR:

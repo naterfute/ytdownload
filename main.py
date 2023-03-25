@@ -1,4 +1,5 @@
 #!/usr/bin/python3.10
+import os.path
 import yt_dlp
 from ytdl.variables import *
 import typer, click
@@ -9,8 +10,8 @@ with open('config.yml') as f:
   config = yaml.safe_load(f)
 
 class NaturalOrderGroup(click.Group):
-    def list_commands(self, ctx):
-        return self.commands.keys()
+  def list_commands(self, ctx):
+    return self.commands.keys()
 
 
 workingpath = getcwd()
@@ -22,12 +23,15 @@ app = typer.Typer(cls=NaturalOrderGroup, add_completion=False)
 def audio(
   link: Optional[list[str]] = typer.Option(None, '-l', '--link'),
   incognito: bool = typer.Option(False, '-i', '--incognito'),
+  test: bool = typer.Option(False, '-t', '--test')
   ):
   if incognito:
     print('Running incognito')
-    youtube.download(ydl_optsIAA, link)
+    print(os.path.dirname(__file__))
+    youtube.download(AUDIO.INCOGNITO, link)
   else:
-    youtube.download(ydl_optsA, link)
+    print(os.path.dirname(__file__))
+    youtube.download(AUDIO.DEFAULT, link)
 
 
 # VIDEO DOWNLOADER
@@ -38,9 +42,9 @@ def video(
 ):
   if incognito:
     print('Running incognito')
-    youtube.download(ydl_optsIVA, link)
+    youtube.download(VIDEO.INCOGNITO, link)
   else:
-    youtube.download(ydl_optsV, link)
+    youtube.download(VIDEO.DEFAULT, link)
 
 
 if __name__ == "__main__":

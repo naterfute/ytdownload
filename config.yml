@@ -1,4 +1,6 @@
-[AUDIO]
+
+
+AUDIO:
   # Leave field blanks for the directory that your script is located
   # EXAMPLE: 
   # path: /home/user/Music/download/
@@ -8,7 +10,8 @@
   path:
   archive:
 
-[VIDEO]
+
+VIDEO:
   # Leave field blanks for the directory that your script is located
   # EXAMPLE: 
   # path: /home/user/Videos/downloaded/
@@ -17,3 +20,5 @@
 
   path:
   archive:
+
+
