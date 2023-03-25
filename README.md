@@ -1,6 +1,7 @@
 # ytdownload
 Terminal Youtube Downloader using YT-DLP
-
+# IMPORTANT
+If you Dont set your variables inside of config.yml It <ins>WILL NOT WORK</ins>
 ## Setup
     git clone https://github.com/KalebSchmidlkofer/ytdownload.git
 #### Its best practice to create a virtual enviorment
@@ -14,11 +15,15 @@ Terminal Youtube Downloader using YT-DLP
 ### WIP
 In order to use the links you must do :
 
-    python main.py -l "https://www.youtube.com/watch?v=dQw4w9WgXcQ&" or -yt 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&'
+    python main.py audio -l "https://www.youtube.com/watch?v=dQw4w9WgXcQ&" or -yt 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&'
+
+For Video it's the same thing just 
+
+    python main.py video
 
 if you dont and instead run this:
 
-    python main.py -l https://www.youtube.com/watch?v=dQw4w9WgXcQ&
+    python main.py audio -l https://www.youtube.com/watch?v=dQw4w9WgXcQ&
 
 you will get an error like this:
 
