@@ -3,8 +3,8 @@ from sys import platform
 import math, json, yt_dlp
 import yaml
 try:
-  if not path.isfile(f'./config.yml'):
-    with open('config.yml', 'w') as f:
+  if not path.isfile(f'./ytdl/config.yml'):
+    with open('./ytdl/config.yml', 'w') as f:
       f.write('''
 AUDIO:
   # Leave field blanks for the directory that your script is located
@@ -27,7 +27,7 @@ VIDEO:
   path: 
   archive: 
       ''')
-  with open('config.yml') as f:
+  with open('./ytdl/config.yml') as f:
     config = yaml.safe_load(f)
   Audio_File_Save = config['AUDIO']['path']
   AudioArchive = config['AUDIO']['archive']
@@ -65,15 +65,15 @@ VIDEO:
         info = json.dumps(ydl.sanitize_info(info))
         json_dict = json.loads(info)
         title = json_dict.get('title')
-        global filesize 
-        filesize = json_dict.get('filesize')
+        # global filesize 
+        # filesize = json_dict.get('filesize')
         print(title)
 
       def download(ydlopts, links):
         with yt_dlp.YoutubeDL(ydlopts) as ydl:
           for x in links:
             #* Set up so that if playlist = NA change download! path
-            youtube.title(ydl, x)
+            # youtube.title(ydl, x)
             ydl.download([x])
 
       def convert_size(size_bytes):
