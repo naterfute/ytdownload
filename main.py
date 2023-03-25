@@ -23,14 +23,11 @@ app = typer.Typer(cls=NaturalOrderGroup, add_completion=False)
 def audio(
   link: Optional[list[str]] = typer.Option(None, '-l', '--link'),
   incognito: bool = typer.Option(False, '-i', '--incognito'),
-  test: bool = typer.Option(False, '-t', '--test')
   ):
   if incognito:
     print('Running incognito')
-    print(os.path.dirname(__file__))
     youtube.download(AUDIO.INCOGNITO, link)
   else:
-    print(os.path.dirname(__file__))
     youtube.download(AUDIO.DEFAULT, link)
 
 
