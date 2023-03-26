@@ -16,6 +16,8 @@ for Windows:
     
     .venv\scripts\activate.bat
 
+Then You need to install the requirements from the requirements.txt file.
+    
     pip install -r requirements.txt
     
 ### Usage
