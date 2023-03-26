@@ -1,8 +1,8 @@
 # ytdownload
 Terminal Youtube Downloader using YT-DLP
 # IMPORTANT
-This Script is Disigned for linux use, I Have no idea if it will work on windows or not. If you would like to make a pull request to add windows support I will accept
-If you Dont set your variables inside of config.yml It <ins>WILL NOT WORK</ins>
+1. This Script is Disigned for linux use, I Have no idea if it will work on windows or not. If you would like to make a pull request to add windows support I will accept  
+2. If you Dont set your variables inside of config.yml It <ins>WILL NOT WORK</ins>
 ## Setup
     git clone https://github.com/KalebSchmidlkofer/ytdownload.git
 #### Its best practice to create a virtual enviorment
