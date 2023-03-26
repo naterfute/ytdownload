@@ -8,7 +8,7 @@ Terminal Youtube Downloader using YT-DLP
 #### Its best practice to create a virtual enviorment
     python -m venv .venv
     
-    For Liux source venv/bin/activate
+    For Linux source venv/bin/activate
 
     for Windows .venv\scripts\activate.bat
 
