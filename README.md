@@ -24,7 +24,15 @@ Then You need to install the requirements from the requirements.txt file.
 ### WIP
 In order to use the links you must do :
 
-    python main.py audio -l "https://www.youtube.com/watch?v=dQw4w9WgXcQ&" or -yt 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&'
+    python main.py audio -l "https://www.youtube.com/watch?v=dQw4w9WgXcQ&"
+
+For multiple links do:
+
+    python main.py audio -l "link1" -l "link2"
+
+if you want to download incognito do:
+
+    python main.py audio -i -l "link1" -l "link2"
 
 For Video it's the same thing just 
 
