@@ -3,8 +3,11 @@ from sys import platform
 import math, json, yt_dlp
 import yaml
 try:
-  if not path.isfile(f'./ytdl/config.yml'):
-    with open('./ytdl/config.yml', 'w') as f:
+  script=path.dirname(path.realpath(__file__))
+  configfile=f'{script}/config.yml'
+
+  if not path.isfile(configfile):
+    with open(configfile, 'w') as f:
       f.write('''
 AUDIO:
   # Leave field blanks for the directory that your script is located
@@ -13,8 +16,8 @@ AUDIO:
   # In this example archive would go to /home/user/Music/AudioArchive.txt
   # archive: AudioArchive.txt
 
-  path: 
-  archive: 
+  path: ./Audio
+  archive: ./AudioArchive
 
 
 VIDEO:
@@ -24,10 +27,10 @@ VIDEO:
   # In this example archive would go to /home/user/Videos/VideoArchive.txt
   # archive: VideoArchive.txt
 
-  path: 
-  archive: 
+  path: ./Videos
+  archive: ./VideosArchive
       ''')
-  with open('./ytdl/config.yml') as f:
+  with open(configfile) as f:
     config = yaml.safe_load(f)
   Audio_File_Save = config['AUDIO']['path']
   AudioArchive = config['AUDIO']['archive']
