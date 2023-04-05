@@ -197,7 +197,6 @@ window = sg.Window('Youtube Downloader Beta-V1.0', layout, size=[500, 400], elem
 
 while True:
   event, values = window.read()
-  print(event, values)
   if event == 'CANCEL' or event == sg.WIN_CLOSED:
     break
   if event == 'DOWNLOAD':
