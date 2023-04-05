@@ -1,10 +1,14 @@
+import PySimpleGUI as sg
+import tkinter
+
 from os import environ, getcwd, path
-from sys import platform
+from sys import platform, exit
+from pathlib import Path
 import yt_dlp, math, json
 import yaml
 try:
-  if not path.isfile(f'./ytdl/config.yml'):
-    with open('./ytdl/config.yml', 'w') as f:
+  if not path.isfile(f'./config.yml'):
+    with open('./config.yml', 'w') as f:
       f.write('''AUDIO:
   # Leave field blanks for the directory that your script is located
   # EXAMPLE: 
@@ -26,7 +30,9 @@ VIDEO:
   path: 
   archive: 
       ''')
-  with open('./ytdl/config.yml') as f:
+      raise TypeError('Please Configure You config.yaml Now')
+
+  with open('./config.yml') as f:
     config = yaml.safe_load(f)
   Audio_File_Save = config['AUDIO']['path']
   AudioArchive = config['AUDIO']['archive']
@@ -65,11 +71,7 @@ VIDEO:
 
       def download(ydlopts, links):
         with yt_dlp.YoutubeDL(ydlopts) as ydl:
-          for x in links:
-            #* Set up so that if playlist = NA change download! path
-
-            # youtube.title(ydl, x)
-            ydl.download([x])
+          ydl.download([links])
 
       def convert_size(size_bytes):
         if not isinstance(size_bytes, (int, float)):
@@ -101,7 +103,7 @@ VIDEO:
   #* Multi-Line Variables
 #! Must make use of this in meta data '%(playlist_index)s '
   class AUDIO(object):
-    DEFAULT = {
+    MP3 = {
       'format': 'bestaudio/best',
       'outtmpl': f'{Audio_File_Save}/%(uploader)s/%(title)s.%(ext)s',
       'write_info_json': './file.json',
@@ -139,7 +141,7 @@ VIDEO:
       ],
     }            
   class VIDEO(object):
-    DEFAULT = {
+    MP4 = {
       'format': 'remux/best',
       'writesubs': True,
       'subtitle': '--write-sub --sub-lang en --sub-format json3',         
@@ -176,38 +178,33 @@ VIDEO:
       {'key': 'EmbedThumbnail','already_have_thumbnail': False,}
       ],
     }
-  class anime():
-    ydl_optsANIME = {
-      'format': 'remux/best',
-      'write-subs': True,
-      'subtitle': 'write-sub sub-lang *en* sub-format json3',
-      'sublang': '*en*',
-      'subformat': 'json3',
-      'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
-      'breakonexisting': True,
-      'quite': True,
-      'logger': MyLogger(),
-      'progress_hooks': [youtube.hook],
-      'ProgressTemplate': 'progress',
-      'consoletitle': True,
-      'ignoreerrors': True,
-      'postprocessors':[
-      {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': '1080'},
-      {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
-      {'key': 'EmbedThumbnail','already_have_thumbnail': False,}
-      ]}
-
-
-  class COLOR:
-    Red = '\033[91m'
-    Green = '\033[92m'
-    Blue = '\033[94m'
-    Cyan = '\033[96m'
-    White = '\033[97m'
-    Yellow = '\033[93m'
-    Magenta = '\033[95m'
-    Grey = '\033[90m'
-    Black = '\033[90m'
-    Default = '\033[0m'
 except TypeError as e:
   raise TypeError('Please Configure config.yml')
+
+#! Start of the gui
+sg.theme('DarkAmber')
+menu_def = [
+  ['Config', ['Audio', 'Video']],
+  ['Help', ['About...', 'Update']]
+]
+layout = [
+  [sg.Menu(menu_def, pad=(30,30))],
+  [sg.Text('YoutubeLink:'), sg.InputText(do_not_clear=False), sg.OptionMenu(values=['.mp3', '.mp4'], default_value='.mp3')],
+  [sg.Button('DOWNLOAD'), sg.Button('CANCEL')],
+]
+
+window = sg.Window('Youtube Downloader Beta-V1.0', layout, size=[500, 400], element_justification='c')
+
+while True:
+  event, values = window.read()
+  print(event, values)
+  if event == 'CANCEL' or event == sg.WIN_CLOSED:
+    break
+  if event == 'DOWNLOAD':
+    list = []
+    list.append(f'{values[1]}')
+    if values[2] == '.mp3':
+      youtube.download(AUDIO.MP3, list[0])
+    elif values[2] == '.mp4':
+      youtube.download(VIDEO.MP4)
+

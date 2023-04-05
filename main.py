@@ -1,14 +1,11 @@
 #!/usr/bin/python3.10
-import yt_dlp
 from ytdl.variables import *
 import typer, click
-from typing import Optional, List, Tuple
-
+from typing import Optional
 
 class NaturalOrderGroup(click.Group):
   def list_commands(self, ctx):
     return self.commands.keys()
-
 
 workingpath = getcwd()
 app = typer.Typer(cls=NaturalOrderGroup, add_completion=False)
@@ -20,11 +17,11 @@ def audio(
   link: Optional[list[str]] = typer.Option(None, '-l', '--link'),
   incognito: bool = typer.Option(False, '-i', '--incognito'),
   ):
-  if incognito:
+  if not incognito:
+    youtube.download(AUDIO.DEFAULT, link)
+  else:
     print('Running incognito')
     youtube.download(AUDIO.INCOGNITO, link)
-  else:
-    youtube.download(AUDIO.DEFAULT, link)
 
 
 # VIDEO DOWNLOADER
@@ -33,11 +30,11 @@ def video(
   link: Optional[list[str]] = typer.Option(None, '-l', '--link'),
   incognito: bool = typer.Option(False, '-i', '--incognito')
 ):
-  if incognito:
+  if not incognito:
+    youtube.download(VIDEO.DEFAULT, link)
+  else:
     print('Running incognito')
     youtube.download(VIDEO.INCOGNITO, link)
-  else:
-    youtube.download(VIDEO.DEFAULT, link)
 
 
 if __name__ == "__main__":
