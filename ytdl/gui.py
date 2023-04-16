@@ -216,7 +216,6 @@ layout = [
 ]
 
 window = sg.Window('Youtube Downloader Beta-V1.0', layout, size=[500, 100], element_justification='c')
-
 while True:
   event, values = window.read()
   print(event)
