@@ -211,3 +211,4 @@ VIDEO:
     Default = '\033[0m'
 except TypeError as e:
   raise TypeError('Please Configure config.yml')
+

@@ -31,7 +31,7 @@ VIDEO:
   archive: 
       ''')
       raise TypeError('Please Configure You config.yaml Now')
-
+    
   with open('./config.yml') as f:
     config = yaml.safe_load(f)
   Audio_File_Save = config['AUDIO']['path']
@@ -97,7 +97,7 @@ VIDEO:
 
           # print(f'{COLOR.Green}{youtube.convert_size(currently_downloaded)}{COLOR.Blue}/{COLOR.Green}{youtube.convert_size(filesize)}{COLOR.Default}')
           print(d['_percent_str'], d['_eta_str'])
-          print(f'Elaspsed:')
+          print(f'Elapsed:')
           print(d['elapsed'])
           
   #* Multi-Line Variables
@@ -181,10 +181,32 @@ VIDEO:
 except TypeError as e:
   raise TypeError('Please Configure config.yml')
 
+def popup_text(filename, text):
+  layout = [
+      [sg.Multiline(text, size=(80, 25)),],
+  ]
+  win = sg.Window(filename, layout, modal=True, finalize=True)
+  
+  while True:
+      event, values = win.read()
+      if event == sg.WINDOW_CLOSED:
+          break
+  win.close()
+
+sg.set_options(font=("Microsoft JhengHei", 16))
+
+layout = [
+    [
+        sg.Input(key='-INPUT-'),
+        sg.FileBrowse(file_types=(("TXT Files", "*.txt"), ("ALL Files", "*.*"))),
+        sg.Button("Open"),
+    ]
+]
+
 #! Start of the gui
-sg.theme('DarkAmber')
+background_color='#ffffff'
 menu_def = [
-  ['Config', ['Audio', 'Video']],
+  ['Config', ['config.yml']],
   ['Help', ['About...', 'Update']]
 ]
 layout = [
@@ -193,10 +215,11 @@ layout = [
   [sg.Button('DOWNLOAD'), sg.Button('CANCEL')],
 ]
 
-window = sg.Window('Youtube Downloader Beta-V1.0', layout, size=[500, 400], element_justification='c')
+window = sg.Window('Youtube Downloader Beta-V1.0', layout, size=[500, 100], element_justification='c')
 
 while True:
   event, values = window.read()
+  print(event)
   if event == 'CANCEL' or event == sg.WIN_CLOSED:
     break
   if event == 'DOWNLOAD':
@@ -205,5 +228,16 @@ while True:
     if values[2] == '.mp3':
       youtube.download(AUDIO.MP3, list[0])
     elif values[2] == '.mp4':
-      youtube.download(VIDEO.MP4)
+      youtube.download(VIDEO.MP4, list[0])
+  if event == 'Audio':
+    filename = f'config.yml'
+    if Path(filename).is_file():
+      try:
+          with open(filename, "rt", encoding='utf-8') as f:
+              text = f.read()
+          popup_text(filename, text)
+      except Exception as e:
+          print("Error: ", e)
 
+      
+      

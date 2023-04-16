@@ -36,6 +36,8 @@ def video(
     print('Running incognito')
     youtube.download(VIDEO.INCOGNITO, link)
 
-
-if __name__ == "__main__":
-  app()
+try:
+  if __name__ == "__main__":
+    app()
+except AssertionError as e:
+  print(e)
