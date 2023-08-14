@@ -4,8 +4,8 @@ Terminal Youtube Downloader using [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 1. This Script is Disigned for linux use, I Have no idea if it will work on windows or not. If you would like to make a pull request to add windows support I will accept  
 2. If you Dont set your variables inside of config.yml It <ins>WILL NOT WORK</ins>
 ## Todo:
-- [] make website using Django
-- [] make better way to choose quality
+- [ ] make website using Django
+- [ ] make better way to choose quality
 
 
 ## Setup
