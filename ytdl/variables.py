@@ -1,6 +1,7 @@
 from os import environ, getcwd, path
 from sys import platform
 import yt_dlp, math, json
+from typing import Optional
 import yaml
 try:
   if not path.isfile(f'./ytdl/config.yml'):
@@ -51,8 +52,8 @@ VIDEO:
       print(msg)
 
   #* Class/Functions
-  filesize = ''
   class youtube(object):
+      quality = None
       def transfer(total_bytes_download):
         return total_bytes_download
 
@@ -62,25 +63,13 @@ VIDEO:
         json_dict = json.loads(info)
         title = json_dict.get('title')
         print(title)
-
-      def download(ydlopts, links):
+        
+      def download(ydlopts, links, quality):
+        youtube.quality = quality
         with yt_dlp.YoutubeDL(ydlopts) as ydl:
           for x in links:
             #* Set up so that if playlist = NA change download! path
-
-            # youtube.title(ydl, x)
             ydl.download([x])
-
-      def convert_size(size_bytes):
-        if not isinstance(size_bytes, (int, float)):
-          raise TypeError("Input must be a numeric value")
-        if size_bytes == 0:
-          return "0B" 
-        size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
-        i = int(math.floor(math.log(size_bytes, 1024)))
-        p = math.pow(1024, i)
-        s = round(size_bytes / p, 2)
-        return "%s %s" % (s, size_name[i])
 
       def hook(d):
         if d['status'] == 'finished':
@@ -97,85 +86,40 @@ VIDEO:
           print(d['_percent_str'], d['_eta_str'])
           print(f'Elaspsed:')
           print(d['elapsed'])
-          
+
+  def base(incognito:bool,format:str, outtmpl:str, post_processor:str, archive:Optional[str] = None):
+    try:
+      BASE = {
+        'writethumbnail': True,
+        'breakonexisting': True,
+        'consoletitle': True,
+        'ProgressTemplate': 'progress',
+        'ignoreerrors': True,
+        'logger': MyLogger(),
+        'progress_hooks': [youtube.hook],
+        'noplaylist': True,
+        'postprocessors':[
+        {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
+        {'key': 'EmbedThumbnail','already_have_thumbnail': True,}
+        ],
+      }
+      if incognito:
+        INCOGNITO = BASE['format'], BASE['outtmpl'], BASE['download_archive'] = f'{format}', f'{outtmpl}', archive and BASE['postprocessors'].append(post_processor)
+      else:
+        INCOGNITO = BASE['format'], BASE['outtmpl'] = f'{format}', f'{outtmpl}' and BASE['postprocessors'].append(post_processor)
+      return INCOGNITO
+    except:
+      print('error')
   #* Multi-Line Variables
 #! Must make use of this in meta data '%(playlist_index)s '
   class AUDIO(object):
-    DEFAULT = {
-      'format': 'bestaudio/best',
-      'outtmpl': f'{Audio_File_Save}/%(uploader)s/%(title)s.%(ext)s',
-      'write_info_json': './file.json',
-      'writethumbnail': True,
-      'breakonexisting': True,
-      'ProgressTemplate': 'progress',
-      'ignoreerrors': True,
-      'logger': MyLogger(),
-      'progress_hooks': [youtube.hook],
-      'noplaylist': True,
-      'download_archive': AudioArchive,
-      'postprocessors':[
-      {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': '320'},
-      {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
-      {'key': 'EmbedThumbnail','already_have_thumbnail': True,}
-      ],
-    }            
-    INCOGNITO = {
-      'format': 'bestaudio/best',
-      'writethumbnail': True,
-      'writesubs': True,
-      'write_info_json': 'file.json',
-      'outtmpl': f'{Audio_File_Save}/%(playlist)s/%(uploader)s/%(title)s.%(ext)s',
-      'breakonexisting': True,
-      'ProgressTemplate': 'progress',
-      'writeautosubs': False,
-      'ignoreerrors': True,
-      'logger': MyLogger(),
-      'progress_hooks': [youtube.hook],
-      'noplaylist': True,
-      'postprocessors':[
-      {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': '320'},
-      {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
-      {'key': 'EmbedThumbnail','already_have_thumbnail': True,}
-      ],
-    }            
+    DEFAULT = base(incognito=False, format='bestaudio/best', outtmpl=f'{Audio_File_Save}/%(uploader)s/%(title)s.%(ext)s', post_processor={'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': f'{youtube.quality}'}, archive=AudioArchive)
+    INCOGNITO = base(incognito=True, format='bestaudio/best', outtmpl=f'{Audio_File_Save}/%(uploader)s/%(title)s.%(ext)s', post_processor={'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': f'{youtube.quality}'})
+
   class VIDEO(object):
-    DEFAULT = {
-      'format': 'remux/best',
-      'writesubs': True,
-      'subtitle': '--write-sub --sub-lang en --sub-format json3',         
-      'outtmpl': f'Video_File_Save/%(title)s.%(ext)s',
-      'breakonexisting': True,
-      'quite': True,
-      'logger': MyLogger(),
-      'progress_hooks': [youtube.hook],
-      'ProgressTemplate': 'progress',
-      'consoletitle': True,
-      'download_archive': VideoArchive,
-      'ignoreerrors': True,
-      'postprocessors':[
-      {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': '1080'},
-      {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
-      {'key': 'EmbedThumbnail','already_have_thumbnail': False,}
-      ],
-    }
-    INCOGNITO = {
-      'format': 'remux/best',
-      'writesubs': True,
-      'subtitle': '--write-sub --sub-lang en --sub-format json3',
-      'outtmpl': f'{Video_File_Save}/%(title)s.%(ext)s',
-      'breakonexisting': True,
-      'quite': True,
-      'logger': MyLogger(),
-      'progress_hooks': [youtube.hook],
-      'ProgressTemplate': 'progress',
-      'consoletitle': True,
-      'ignoreerrors': True,
-      'postprocessors':[
-      {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': '1080'},
-      {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
-      {'key': 'EmbedThumbnail','already_have_thumbnail': False,}
-      ],
-    }
+    DEFAULT = base(incognito=False, format='remux/best', outtmpl=f'{Video_File_Save}/%(title)s.%(ext)s', post_processor={'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': f'{youtube.quality}'}, archive=AudioArchive)
+    INCOGNITO = base(incognito=True, format='remux/best', outtmpl=f'{Video_File_Save}/%(title)s.%(ext)s', post_processor={'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': f'{youtube.quality}'})
+    
   class anime():
     ydl_optsANIME = {
       'format': 'remux/best',
@@ -210,5 +154,6 @@ VIDEO:
     Black = '\033[90m'
     Default = '\033[0m'
 except TypeError as e:
+  print(e)
   raise TypeError('Please Configure config.yml')
 
