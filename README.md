@@ -10,7 +10,7 @@ Terminal Youtube Downloader using [yt-dlp](https://github.com/yt-dlp/yt-dlp)
     
 For Linux: 
     
-    source venv/bin/activate
+    source .venv/bin/activate
 
 for Windows: 
     
