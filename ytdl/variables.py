@@ -4,7 +4,7 @@ import yt_dlp, math, json
 from typing import Optional
 import yaml
 try:
-  with open('./ytdl/config.yml') as f:
+  with open(path.join('ytdl', 'config.yml')) as f:
     config = yaml.safe_load(f)
   Audio_File_Save = config['AUDIO']['path']
   AudioArchive = config['AUDIO']['archive']
@@ -30,9 +30,14 @@ try:
 
   #* Class/Functions
   class youtube(object):
+      def __init__(self):
+        self.bytes = None
+        self.info = None   
       quality = None
-      def transfer(total_bytes_download):
-        return total_bytes_download
+        
+      def exchange(self):
+        exchnaged = self.bytes * 1000000
+        return exchnaged
 
       def title(ydl, x):
         info = ydl.extract_info(x, download=False)
@@ -47,22 +52,20 @@ try:
           for x in links:
             #* Set up so that if playlist = NA change download! path
             ydl.download([x])
-
-      def hook(d):
+      
+      def hook(self, d):
         if d['status'] == 'finished':
           d.get('')
           print(d['filename'])
           print('Done downloading, now post-processing ...')
 
         if d['status'] == 'downloading':
-          global currently_downloaded
-          d.get('')
           currently_downloaded = d.get('downloaded_bytes')
-
-          # print(f'{COLOR.Green}{youtube.convert_size(currently_downloaded)}{COLOR.Blue}/{COLOR.Green}{youtube.convert_size(filesize)}{COLOR.Default}')
+          self.bytes = currently_downloaded
+          print(youtube.exchange())
           print(d['_percent_str'], d['_eta_str'])
-          print(f'Elaspsed:')
-          print(d['elapsed'])
+          # print(f'Elaspsed:')
+          # print(d['elapsed'])
 
   def base(incognito:bool,format:str, outtmpl:str, post_processor:str, archive:Optional[str] = None):
     try:
@@ -81,10 +84,10 @@ try:
         ],
       }
       if incognito:
-        INCOGNITO = BASE['format'], BASE['outtmpl'], BASE['download_archive'] = f'{format}', f'{outtmpl}', archive and BASE['postprocessors'].append(post_processor)
+        BASE['format'], BASE['outtmpl'], BASE['download_archive'] = f'{format}', f'{outtmpl}', archive and BASE['postprocessors'].insert(0, post_processor)
       else:
-        INCOGNITO = BASE['format'], BASE['outtmpl'] = f'{format}', f'{outtmpl}' and BASE['postprocessors'].append(post_processor)
-      return INCOGNITO
+        BASE['format'], BASE['outtmpl'] = f'{format}', f'{outtmpl}' and BASE['postprocessors'].insert(0, post_processor)
+      return BASE
     except:
       print('error')
   #* Multi-Line Variables
@@ -97,28 +100,6 @@ try:
     DEFAULT = base(incognito=False, format='remux/best', outtmpl=f'{Video_File_Save}/%(title)s.%(ext)s', post_processor={'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': f'{youtube.quality}'}, archive=AudioArchive)
     INCOGNITO = base(incognito=True, format='remux/best', outtmpl=f'{Video_File_Save}/%(title)s.%(ext)s', post_processor={'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': f'{youtube.quality}'})
     
-  class anime():
-    ydl_optsANIME = {
-      'format': 'remux/best',
-      'write-subs': True,
-      'subtitle': 'write-sub sub-lang *en* sub-format json3',
-      'sublang': '*en*',
-      'subformat': 'json3',
-      'outtmpl': Video_File_Save + '/%(title)s.%(ext)s',
-      'breakonexisting': True,
-      'quite': True,
-      'logger': MyLogger(),
-      'progress_hooks': [youtube.hook],
-      'ProgressTemplate': 'progress',
-      'consoletitle': True,
-      'ignoreerrors': True,
-      'postprocessors':[
-      {'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': '1080'},
-      {'key': 'FFmpegMetadata', 'add_metadata': 'True'},
-      {'key': 'EmbedThumbnail','already_have_thumbnail': False,}
-      ]}
-
-
   class COLOR:
     Red = '\033[91m'
     Green = '\033[92m'
