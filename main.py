@@ -38,6 +38,7 @@ def video(
   incognito: bool = typer.Option(False, '-i', '--incognito', help="Doesn't write to archive file"),
   quality: Optional[int] = typer.Option('1080', '-q', '--quality', help='Choose the quality of the Video(Defaults to best)')
 ):
+  youtube.check_links(link)
   youtube.quality_check(quality, VIDEO_QUALITY)
   if not incognito:
     youtube.download(VIDEO.DEFAULT, link, quality)
