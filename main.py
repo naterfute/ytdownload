@@ -19,8 +19,10 @@ VIDEO_QUALITY = [144, 240, 360, 480, 720, 1080]
 def audio(
   link: Optional[list[str]] = typer.Option(None, '-l', '--link', help='Url to a youtube video'),
   incognito: bool = typer.Option(False, '-i', '--incognito', help="Doesn't write to archive file"),
-  quality: Optional[int] = typer.Option(None, '-q', '--quality', help='Choose the quality of the audio(Defaults to best)')
+  quality: int = typer.Option(320, '-q', '--quality', help='Choose the quality of the audio(Defaults to best)')
   ):
+  quality = int(quality)
+  youtube.check_links(link)
   youtube.quality_check(quality, AUDIO_QUALITY)
   if not incognito:
     youtube.download(AUDIO.DEFAULT, link, quality)
@@ -34,7 +36,7 @@ def audio(
 def video(
   link: Optional[list[str]] = typer.Option(None, '-l', '--link', help='Url to a youtube video'),
   incognito: bool = typer.Option(False, '-i', '--incognito', help="Doesn't write to archive file"),
-  quality: Optional[int] = typer.Option(None, '-q', '--quality', help='Choose the quality of the Video(Defaults to best)')
+  quality: Optional[int] = typer.Option('1080', '-q', '--quality', help='Choose the quality of the Video(Defaults to best)')
 ):
   youtube.quality_check(quality, VIDEO_QUALITY)
   if not incognito:

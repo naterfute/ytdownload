@@ -3,6 +3,7 @@ from sys import platform
 import yt_dlp, math, json
 from typing import Optional
 import yaml
+import pprint
 try:
   with open(path.join('ytdl', 'config.yml')) as f:
     config = yaml.safe_load(f)
@@ -34,6 +35,9 @@ try:
         self.bytes = None
         self.info = None   
       quality = None
+      def quality_return(self):
+        return self.quality
+      
       def quality_check(user_quality, quality_list:list):
         if user_quality == None:
           pass
@@ -41,6 +45,13 @@ try:
           raise SyntaxError("Invalid Audio/Video Quality")
         else:
           pass
+        
+      def check_links(links):
+        if links == []:
+          raise TypeError("You didn't supply any link!")
+        else:
+          pass
+        
 
       def title(ydl, x):
         info = ydl.extract_info(x, download=False)
@@ -90,6 +101,7 @@ try:
         BASE['format'], BASE['outtmpl'], BASE['download_archive'] = f'{format}', f'{outtmpl}', archive and BASE['postprocessors'].insert(0, post_processor)
       else:
         BASE['format'], BASE['outtmpl'] = f'{format}', f'{outtmpl}' and BASE['postprocessors'].insert(0, post_processor)
+      # pprint.pprint(BASE)
       return BASE
     except:
       print('error')

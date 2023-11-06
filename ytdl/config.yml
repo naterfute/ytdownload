@@ -6,8 +6,8 @@ AUDIO:
   # In this example archive would go to /home/user/Music/AudioArchive.txt
   # archive: AudioArchive.txt
 
-  path: ./Audio
-  archive: ./AudioArchive
+  path: ./Audio/
+  archive: ./AudioArchive/
 
 
 VIDEO:
@@ -17,6 +17,6 @@ VIDEO:
   # In this example archive would go to /home/user/Videos/VideoArchive.txt
   # archive: VideoArchive.txt
 
-  path: ./Videos
-  archive: ./VideosArchive
+  path: ./Videos/
+  archive: ./VideosArchive/
   
