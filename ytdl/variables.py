@@ -34,10 +34,13 @@ try:
         self.bytes = None
         self.info = None   
       quality = None
-        
-      def exchange(self):
-        exchnaged = self.bytes * 1000000
-        return exchnaged
+      def quality_check(user_quality, quality_list:list):
+        if user_quality == None:
+          pass
+        elif not user_quality in quality_list:
+          raise SyntaxError("Invalid Audio/Video Quality")
+        else:
+          pass
 
       def title(ydl, x):
         info = ydl.extract_info(x, download=False)
@@ -93,13 +96,17 @@ try:
   #* Multi-Line Variables
 #! Must make use of this in meta data '%(playlist_index)s '
   class AUDIO(object):
-    DEFAULT = base(incognito=False, format='bestaudio/best', outtmpl=f'{Audio_File_Save}/%(uploader)s/%(title)s.%(ext)s', post_processor={'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': f'{youtube.quality}'}, archive=AudioArchive)
-    INCOGNITO = base(incognito=True, format='bestaudio/best', outtmpl=f'{Audio_File_Save}/%(uploader)s/%(title)s.%(ext)s', post_processor={'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3','preferredquality': f'{youtube.quality}'})
+    DEFAULT = base(incognito=False, format='bestaudio/best', outtmpl=f'{Audio_File_Save}/%(uploader)s/%(title)s.%(ext)s', post_processor={
+                    'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3', 'preferredquality': f'{youtube.quality}'}, archive=AudioArchive)
+    INCOGNITO = base(incognito=True, format='bestaudio/best', outtmpl=f'{Audio_File_Save}/%(uploader)s/%(title)s.%(ext)s', post_processor={
+                      'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3', 'preferredquality': f'{youtube.quality}'})
 
   class VIDEO(object):
-    DEFAULT = base(incognito=False, format='remux/best', outtmpl=f'{Video_File_Save}/%(title)s.%(ext)s', post_processor={'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': f'{youtube.quality}'}, archive=AudioArchive)
-    INCOGNITO = base(incognito=True, format='remux/best', outtmpl=f'{Video_File_Save}/%(title)s.%(ext)s', post_processor={'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4','preferredquality': f'{youtube.quality}'})
-    
+      DEFAULT = base(incognito=False, format='remux/best', outtmpl=f'{Video_File_Save}/%(title)s.%(ext)s', post_processor={
+                      'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4', 'preferredquality': f'{youtube.quality}'}, archive=AudioArchive)
+      INCOGNITO = base(incognito=True, format='remux/best', outtmpl=f'{Video_File_Save}/%(title)s.%(ext)s', post_processor={
+                        'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp4', 'preferredquality': f'{youtube.quality}'})
+
   class COLOR:
     Red = '\033[91m'
     Green = '\033[92m'
