@@ -67,7 +67,7 @@ try:
             #* Set up so that if playlist = NA change download! path
             ydl.download([x])
       
-      def hook(self, d):
+      def hook(d):
         if d['status'] == 'finished':
           d.get('')
           print(d['filename'])
@@ -75,8 +75,7 @@ try:
 
         if d['status'] == 'downloading':
           currently_downloaded = d.get('downloaded_bytes')
-          self.bytes = currently_downloaded
-          print(youtube.exchange())
+          youtube.bytes = currently_downloaded
           print(d['_percent_str'], d['_eta_str'])
           # print(f'Elaspsed:')
           # print(d['elapsed'])
