@@ -39,24 +39,94 @@ class Downloader():
         
   def postprocessor_hooks(d):
     if d['status'] == 'started':
-      print('PostProcessing started')
+      pass
+      # print('PostProcessing started')
     if d['status'] == 'finished':
-      print('PostProcessing finished')
+      pass
+      # print('PostProcessing finished')
 
   ydl_opts = {
       'logger': MyLogger(),
+      'breakonexisting': True,
       'progress_hooks': [progress_hook],
       'postprocessor_hooks': [postprocessor_hooks],
-      # 'format': Downloader.format_selector,
-      # 'format': 'mp3',
-      
-      'postprocessor': [
-        {'preferred_codec': 'mp3/bestaudio/best'},
-        {'key': 'EmbedThumbnail','already_have_thumbnail': True,}]
-  }
+      'format': 'bestaudio/best',
+      'writethumbnail': True,
+      'outtmpl': '%(playlist_title)s/%(title)s.%(ext)s',
+      'postprocessors': [
+        {'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': 'None'},
+        {'add_metadata': 'True', 'key': 'FFmpegMetadata'},
+        {'already_have_thumbnail': False, 'key': 'EmbedThumbnail'}
+      ]}
+
   
   def download(self, urls):
     for x in urls:
       with yt_dlp.YoutubeDL(self.ydl_opts) as ydl:
           ydl.download(x)
   
+
+
+# {'ProgressTemplate': 'progress',
+#  'breakonexisting': True,
+#  'consoletitle': True,
+#  'format': 'bestaudio/best',
+#  'ignoreerrors': True,
+#  'logger': <ytdl.variables.MyLogger object at 0x7f4a9d34a870>,
+#  'noplaylist': True,
+#  'outtmpl': None,
+#  'postprocessors': [{'key': 'FFmpegExtractAudio',
+#                      'preferredcodec': 'mp3',
+#                      'preferredquality': 'None'},
+#                     {'add_metadata': 'True', 'key': 'FFmpegMetadata'},
+#                     {'already_have_thumbnail': True, 'key': 'EmbedThumbnail'}],
+#  'progress_hooks': [<function youtube.hook at 0x7f4a9cafe520>],
+#  'writethumbnail': True}
+
+
+
+# {'ProgressTemplate': 'progress',
+#  'breakonexisting': True,
+#  'consoletitle': True,
+#  'download_archive': None,
+#  'format': 'bestaudio/best',
+#  'ignoreerrors': True,
+#  'logger': <ytdl.variables.MyLogger object at 0x7f4a9d4a11f0>,
+#  'noplaylist': True,
+#  'outtmpl': './Audio//%(uploader)s/%(title)s.%(ext)s',
+#  'postprocessors': [{'add_metadata': 'True', 'key': 'FFmpegMetadata'},
+#                     {'already_have_thumbnail': True, 'key': 'EmbedThumbnail'}],
+#  'progress_hooks': [<function youtube.hook at 0x7f4a9cafe520>],
+#  'writethumbnail': True}
+
+# {'ProgressTemplate': 'progress',
+#  'breakonexisting': True,
+#  'consoletitle': True,
+#  'format': 'remux/best',
+#  'ignoreerrors': True,
+#  'logger': <ytdl.variables.MyLogger object at 0x7f4a9cfc7410>,
+#  'noplaylist': True,
+#  'outtmpl': None,
+#  'postprocessors': [{'key': 'FFmpegExtractAudio',
+#                      'preferredcodec': 'mp4',
+#                      'preferredquality': 'None'},
+#                     {'add_metadata': 'True', 'key': 'FFmpegMetadata'},
+#                     {'already_have_thumbnail': True, 'key': 'EmbedThumbnail'}],
+#  'progress_hooks': [<function youtube.hook at 0x7f4a9cafe520>],
+#  'writethumbnail': True}
+
+# {'ProgressTemplate': 'progress',
+#  'breakonexisting': True,
+#  'consoletitle': True,
+#  'download_archive': None,
+#  'format': 'remux/best',
+#  'ignoreerrors': True,
+#  'logger': <ytdl.variables.MyLogger object at 0x7f4a9e92b500>,
+#  'noplaylist': True,
+#  'outtmpl': './Videos//%(title)s.%(ext)s',
+#  'postprocessors': [{'add_metadata': 'True', 'key': 'FFmpegMetadata'},
+#                     {'already_have_thumbnail': True, 'key': 'EmbedThumbnail'}],
+#  'progress_hooks': [<function youtube.hook at 0x7f4a9cafe520>],
+#  'writethumbnail': True}
