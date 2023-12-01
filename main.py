@@ -14,6 +14,7 @@ def audio(
   if not server:
     Youtube.download(urls=urls)
   else:
+    print(f'http://{Youtube.host}:{Youtube.port}/download/nxUpdlgtUzA')
     response = requests.get(f'http://{Youtube.host}:{Youtube.port}/download/nxUpdlgtUzA')
     if response.status_code == 200:
       print(response.json())

@@ -25,6 +25,7 @@ class MyLogger:
 class Downloader:
   Started=False
   web_use=False
+  server=False
   host=''
   port=''
   download_path=''
@@ -37,13 +38,16 @@ class Downloader:
   def __init__(
     self, host:Optional[str]=None, 
     download_path:Optional[str]='downloads/', 
-    port:Optional[int]=5000
+    port:Optional[int]=5000,
+    server:Optional[bool]=False
   ):
     if not host == None:
       self.web_use = True
       self.host = host
       self.port = port
       self.download_path = download_path
+    elif server:
+      self.server=True
     else:
       pass
     
@@ -95,11 +99,15 @@ class Downloader:
 
     
   def download(self, urls):
-    
-    for x in urls:
-      with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
+    if not self.server:
+      print('list')
+      for x in urls:
+        with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
           ydl.download(x)
-          
+    else:    
+      print('single')
+      with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
+        ydl.download(urls)
 
   def json(self):
     data = {
@@ -117,14 +125,4 @@ class Downloader:
       'eta': self.eta
       },
     }
-    
-    web_use=False
-    host=''
-    port=''
-    download_path=''
-    Status=''
-    filename=''
-    time_elapse=''
-    percent=''
-    eta=''
-    return 
+    return data
