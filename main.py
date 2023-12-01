@@ -3,7 +3,7 @@ import typer
 import requests
 from typing import Optional
 app = typer.Typer()
-Youtube = Downloader(host='host', host_password='''Host_password''', download_path='~/Downloads')
+Youtube = Downloader(host='localhost')
 
 @app.command()
 def audio(
@@ -14,7 +14,7 @@ def audio(
   if not server:
     Youtube.download(urls=urls)
   else:
-    response = requests.get('http://127.0.0.1:5000/download/nxUpdlgtUzA')
+    response = requests.get(f'http://{Youtube.host}:{Youtube.port}/download/nxUpdlgtUzA')
     if response.status_code == 200:
       print(response.json())
     else:
