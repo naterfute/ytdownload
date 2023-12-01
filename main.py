@@ -10,7 +10,6 @@ def audio(
   urls:Optional[list[str]] = typer.Option(None, '-l', '--link', help='Url to youtube video/playlist'),
   server:Optional[bool] = typer.Option(False, '-s', '--server', help='Send a web request to pre-configured url using urls as request')
 ):
-  print(server)
   if not server:
     Youtube.download(urls=urls)
   else:

@@ -81,6 +81,7 @@ class Downloader:
 
   def ydl_opts(self):
     ydl_opts = {
+      'ratelimit': 100, # Kilobytes
       'logger': MyLogger(),
       'breakonexisting': True,
       'progress_hooks': [self.progress_hook],
@@ -100,12 +101,10 @@ class Downloader:
     
   def download(self, urls):
     if not self.server:
-      print('list')
       for x in urls:
         with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
           ydl.download(x)
     else:    
-      print('single')
       with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
         ydl.download(urls)
 
