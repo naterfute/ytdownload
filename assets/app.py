@@ -26,8 +26,13 @@ class Download(Resource):
       youtube.download(url)
       # Optionally, you can return some response after each download
       print(f'Download completed for {url}')
-  
+
+class ping(Resource):
+  def get(self):
+    return {'ping': 'pong'}  
+
 api.add_resource(Download, '/download/<string:url>')
+api.add_resource(ping, '/ping')
 
 
 if __name__ == '__main__': 
