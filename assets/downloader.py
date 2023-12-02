@@ -81,7 +81,7 @@ class Downloader:
 
   def ydl_opts(self):
     ydl_opts = {
-      'ratelimit': 100, # Kilobytes
+      # 'ratelimit': 100, # Kilobytes
       'logger': MyLogger(),
       'breakonexisting': True,
       'progress_hooks': [self.progress_hook],
@@ -90,9 +90,9 @@ class Downloader:
       'writethumbnail': True,
       'outtmpl': 'downloads/%(playlist_title)s/%(title)s.%(ext)s',
       'postprocessors': [
-        {'key': 'FFmpegExtractAudio',
-      'preferredcodec': 'mp3',
-      'preferredquality': 'None'},
+      {'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': 'None'},
       {'add_metadata': 'True', 'key': 'FFmpegMetadata'},
       {'already_have_thumbnail': False, 'key': 'EmbedThumbnail'}
     ]}

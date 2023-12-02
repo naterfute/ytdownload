@@ -3,3 +3,4 @@ Album - At The Edge Of Time
 downloads
 assets/__pycache__
 webserver
+assets/server.py
