@@ -1,10 +1,12 @@
 from flask import Flask, jsonify, request 
 from flask_restful import Resource, Api
 from downloader import Downloader
+from flask_bcrypt import Bcrypt
 import threading, queue
 
 app = Flask(__name__) 
-api = Api(app) 
+api = Api(app)
+bcrypt = Bcrypt(app)
 youtube = Downloader(server=True)
 
 download_queue = queue.Queue()
@@ -24,7 +26,6 @@ class Download(Resource):
     while not download_queue.empty():
       url = download_queue.get()
       youtube.download(url)
-      # Optionally, you can return some response after each download
       print(f'Download completed for {url}')
 
 class ping(Resource):
