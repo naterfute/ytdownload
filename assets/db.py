@@ -1,32 +1,34 @@
-import asyncpg, asyncio
-
-async def main():
-  conn = await asyncpg.connect(host='localhost',
-                               port=5432,
-                               user='Kaleb',
-                               password='',
-                               database='youtube'
-                               )
-  
-  await conn.execute('''
-      CREATE TABLE downloaded(
-          id serial PRIMARY KEY,
-          url text,
-          date_downloaded date
-      )
-  ''')
-
-
-  await conn.close()
-
+import psycopg as pg
 
 class database:
   conn = None
-  async def __init__(self):
-    self.conn = await asyncpg.connect('postgresql://Kaleb@localhost:5432/youtube')
-    
-  async def new_download(self, ):
-    self.conn
 
-asyncio.get_event_loop().run_until_complete(main())
+  def __init__(self, host:str=None, port:int=5432, user:str=None, password:str=None, database:str=None):
+    self.conn = pg.connect(f"host={host} port={port} dbname={database} user={user} password={password}")
 
+  def db_create(self):
+    try:
+      with self.conn.cursor() as cursor:
+        cursor.execute("""
+          CREATE TABLE IF NOT EXISTS downloaded (
+            id serial PRIMARY KEY,
+            title text,
+            url text,
+            path text,
+            elapsed text,
+            time date
+          )             
+          """)
+        self.conn.commit()
+    except pg.Error as e:
+      print(f"Error creating table: {e}")
+  def write_to_db(self, title, url, download_path, elapsed):
+    self.db_create()
+    with self.conn.cursor() as cursor:
+      cursor.execute("""
+        INSERT INTO downloaded (title, url, path, elapsed, time)
+        VALUES (%s, %s, %s, %s, NOW());
+        """, [title, url, download_path, elapsed])
+      self.conn.commit()
+      
+# db.db_create()

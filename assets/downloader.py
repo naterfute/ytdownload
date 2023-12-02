@@ -1,8 +1,13 @@
-import yt_dlp
-from typing import Optional
 import os
+import yt_dlp
 from munch import munchify
+from typing import Optional
 from json import JSONEncoder
+if __name__ == 'downloader':
+  from db import database
+else:
+  pass
+
 class MyLogger:
     def debug(self, msg):
         # For compatibility with youtube-dl, both debug and info are passed into debug
@@ -34,6 +39,8 @@ class Downloader:
   time_elapse=''
   percent=''
   eta=''
+  url=''
+  title=''
 
   def __init__(
     self, host:Optional[str]=None, 
@@ -52,13 +59,14 @@ class Downloader:
       pass
     
   
-  def progress_hook(self, d):
-    self.Status
+  def progress_hook(self, d):    
     if d['status'] == 'finished':
       print(f'Done Downloading "{d['filename']}"')
       self.Started = False
       self.filename = d['filename']
-      self.time_elapsed = d['elapsed']
+      self.time_elapse = d['elapsed']
+      # print(d['_elapsed_str'])
+      # print(d['elapsed'])
     if d['status'] == 'downloading':
       if self.Started:
         print(d['_percent_str'], d['_eta_str'])
@@ -73,6 +81,10 @@ class Downloader:
         
   def postprocessor_hooks(self, d):
     if d['status'] == 'started':
+      info = munchify(d['info_dict'])
+      self.url = info.webpage_url
+      self.title = info.title
+      self.download_path = info.filepath
       self.Status = 'Started'
       pass
     if d['status'] == 'finished':
@@ -81,7 +93,7 @@ class Downloader:
 
   def ydl_opts(self):
     ydl_opts = {
-      # 'ratelimit': 100, # Kilobytes
+      # 'ratelimit': 500, # Kilobytes
       'logger': MyLogger(),
       'breakonexisting': True,
       'progress_hooks': [self.progress_hook],
@@ -107,6 +119,9 @@ class Downloader:
     else:    
       with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
         ydl.download(urls)
+        db = database(host='localhost', user='', password='', database='youtube')
+        db.write_to_db(self.title, self.url, self.download_path, self.time_elapse)
+
 
   def json(self):
     data = {

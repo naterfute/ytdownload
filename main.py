@@ -1,8 +1,9 @@
+from typer import Typer, Option, run, Exit, Argument
 from requests.exceptions import RequestException
 from urllib.parse import urlparse, parse_qs
-from typer import Typer, Option, run, Exit, Argument
 from assets.downloader import Downloader
 from rich.progress import track
+from assets.db import database
 from typing import Optional
 from munch import munchify
 from loguru import logger
@@ -30,7 +31,7 @@ with open('config.yaml') as stream:
   except yaml.YAMLError as exc:
     print(exc)
 loadedyaml = munchify(yamlfile)
-Youtube = Downloader(host=f'{loadedyaml.host}', port=loadedyaml.port)
+# Youtube = Downloader(host=f'{loadedyaml.host}', port=loadedyaml.port)
 
 @app.command()
 def audio(
@@ -43,12 +44,13 @@ def audio(
   debug_init(trace, debug)  
   
   try:
+    Youtube = Downloader(host=f'{loadedyaml.host}', port=loadedyaml.port)
     r = requests.get(f'http://{Youtube.host}:{Youtube.port}/ping')
     r = munchify(r.json())
     logger.info(r)
     print(r.ping)
   except RequestException as e:
-    print('Failed to connect to webserver run in debug to see more info')
+    logger.warning('Failed to connect to webserver run in debug to see more info')
     logger.info("Try making sure the webserver is up and your calling the right host and port!")
     logger.info(f"current host:{Youtube.host} port:{Youtube.port}")
     logger.debug(e)

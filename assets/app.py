@@ -3,7 +3,6 @@ from flask_restful import Resource, Api
 from downloader import Downloader
 from flask_bcrypt import Bcrypt
 import threading, queue
-
 app = Flask(__name__) 
 api = Api(app)
 bcrypt = Bcrypt(app)
@@ -28,13 +27,22 @@ class Download(Resource):
       youtube.download(url)
       print(f'Download completed for {url}')
 
+class DownloadInfo(Resource):
+  def get(self):
+    
+    return {}
+      
 class ping(Resource):
   def get(self):
-    return {'ping': 'pong'}  
+    
+    return {
+      'ping': 'pong',
+            }
+  
 
 api.add_resource(Download, '/download/<string:url>')
 api.add_resource(ping, '/ping')
 
 
-if __name__ == '__main__': 
-    app.run(debug = True) 
+if __name__ == '__main__':
+    app.run(debug = True)

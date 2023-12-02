@@ -1,8 +1,10 @@
 host: localhost
 port: 5000
 
-postgresql_host:
-postgresql_port:
-postgresql_db:
-postgresql_user:
-postgresql_password:
+db:
+## Does nothing yet
+  postgresql_host:
+  postgresql_port:
+  postgresql_db:
+  postgresql_user:
+  postgresql_password:
