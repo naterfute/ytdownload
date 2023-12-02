@@ -3,8 +3,8 @@ port: 5000
 
 db:
 ## Does nothing yet
-  postgresql_host:
-  postgresql_port:
-  postgresql_db:
-  postgresql_user:
-  postgresql_password:
+  host: localhost
+  port: 5432
+  db: youtube
+  user: primary
+  password: defaultpassword

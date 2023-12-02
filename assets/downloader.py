@@ -119,7 +119,7 @@ class Downloader:
     else:    
       with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
         ydl.download(urls)
-        db = database(host='localhost', user='', password='', database='youtube')
+        db = database()
         db.write_to_db(self.title, self.url, self.download_path, self.time_elapse)
 
 

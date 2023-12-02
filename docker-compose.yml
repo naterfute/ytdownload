@@ -1,0 +1,16 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    container_name: youtube-postgres
+    environment:
+      - POSTGRES_DB=youtube
+      - POSTGRES_USER=default
+      - POSTGRES_PASSWORD= defaultpassword
+      - POSTGRES_PRIMARY_USER=primary  # Use the same variable
+      - POSTGRES_PRIMARY_PASSWORD=defaultpassword  # Use the same variable
+    network_mode: host
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    restart: unless-stopped
+

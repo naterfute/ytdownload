@@ -1,9 +1,18 @@
+from munch import munchify
 import psycopg as pg
+import yaml
+
+with open("../config.yaml") as f:
+  try:
+    yamlfile=yaml.safe_load(f)
+  except yaml.YAMLError as exc:
+    print(exc)
+config = munchify(yamlfile)
 
 class database:
   conn = None
 
-  def __init__(self, host:str=None, port:int=5432, user:str=None, password:str=None, database:str=None):
+  def __init__(self, host:str=config.db.host, port:int=config.db.port, user:str=config.db.user, password:str=config.db.password, database:str=config.db.db):
     self.conn = pg.connect(f"host={host} port={port} dbname={database} user={user} password={password}")
 
   def db_create(self):
@@ -22,6 +31,8 @@ class database:
         self.conn.commit()
     except pg.Error as e:
       print(f"Error creating table: {e}")
+  
+  
   def write_to_db(self, title, url, download_path, elapsed):
     self.db_create()
     with self.conn.cursor() as cursor:

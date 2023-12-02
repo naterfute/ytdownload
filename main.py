@@ -3,7 +3,6 @@ from requests.exceptions import RequestException
 from urllib.parse import urlparse, parse_qs
 from assets.downloader import Downloader
 from rich.progress import track
-from assets.db import database
 from typing import Optional
 from munch import munchify
 from loguru import logger
