@@ -23,6 +23,25 @@ def debug_init(trace, debug):
     pass
   pass
 
+def spliturl(urls):
+  logger.debug(urls)
+  url=[]
+  for x in urls:
+    parsed_url=urlparse(x)
+
+    query_params = parse_qs(parsed_url.query)
+    video_id = query_params.get('v')
+    playlist_id = query_params.get('list')
+    if not playlist_id == None:
+      url.append(playlist_id)
+    else:
+      url.append(video_id)
+    continue
+  logger.debug('Done Splitting Urls')
+  logger.debug(url)
+  return url
+  
+  
 app = Typer(no_args_is_help=True, add_completion=False)
 with open('config.yaml') as stream:
   try:
@@ -46,31 +65,21 @@ def audio(
     Youtube = Downloader(host=f'{loadedyaml.host}', port=loadedyaml.port)
     r = requests.get(f'http://{Youtube.host}:{Youtube.port}/ping')
     r = munchify(r.json())
-    logger.info(r)
-    print(r.ping)
+    logger.info(f'Pinging server: {r.ping}')
+    logger.debug(r)
   except RequestException as e:
     logger.warning('Failed to connect to webserver run in debug to see more info')
     logger.info("Try making sure the webserver is up and your calling the right host and port!")
     logger.info(f"current host:{Youtube.host} port:{Youtube.port}")
     logger.debug(e)
     sys.exit()
-  
-  url=[]
-  playlist_id = ''
-  for x in urls:
-    parsed_url=urlparse(x)
-
-    query_params = parse_qs(parsed_url.query)
-    video_id = query_params.get('v')
-    playlist_id = query_params.get('list')
-    if not playlist_id == None:
-      url.append(playlist_id)
-    else:
-      url.append(video_id)
-    continue
-    
-  logger.debug(f'Urls: {url}')
-  logger.debug(f'Full Urls: {urls}')
+  url=spliturl(urls)
+  if url == []:
+    logger.error('Url Is empty! exiting')
+    sys.exit()
+  else:
+    pass
+  logger.trace(f'Full Urls: {urls}')
   if not server:
     logger.debug(f'Downloading: {urls}')
     Youtube.download(urls=urls)

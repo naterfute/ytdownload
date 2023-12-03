@@ -93,7 +93,7 @@ class Downloader:
 
   def ydl_opts(self):
     ydl_opts = {
-      # 'ratelimit': 500, # Kilobytes
+      # 'ratelimit': 1000, # Kilobytes
       'logger': MyLogger(),
       'breakonexisting': True,
       'progress_hooks': [self.progress_hook],
@@ -121,7 +121,6 @@ class Downloader:
         ydl.download(urls)
         db = database()
         db.write_to_db(self.title, self.url, self.download_path, self.time_elapse)
-
 
   def json(self):
     data = {
