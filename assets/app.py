@@ -2,7 +2,17 @@ from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 from downloader import Downloader
 from flask_bcrypt import Bcrypt
+from munch import munchify
 import threading, queue
+import yaml
+
+with open('../config.yaml') as stream:
+  try:
+    yamlfile=yaml.safe_load(stream)
+  except yaml.YAMLError as exc:
+    print(exc)
+config = munchify(yamlfile)
+
 app = Flask(__name__) 
 api = Api(app)
 bcrypt = Bcrypt(app)
@@ -38,11 +48,15 @@ class ping(Resource):
     return {
       'ping': 'pong',
             }
-  
+
+@app.route('/')
+def home():
+  return 'use /download/youtubeurl to download videos'
+
 
 api.add_resource(Download, '/download/<string:url>')
 api.add_resource(ping, '/ping')
 
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = True, port=config.port)
