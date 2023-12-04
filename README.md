@@ -2,6 +2,11 @@
 
 ## Important!
 
+Please do Note that this Runs using a flask server, the flask server has **No way To authenticate**, That means
+if you have the port open to the public, anyone can send requests. This is not something you want, as far as i'm
+aware, there are no errors in my code that would allow anyone to execute any destructive code, or something.
+That's only as far as I know, just be careful with this.
+
 ### Prefers Playlist over individual videos
 
 This entire branch was made for me to add music to my plex server with no hassle,
