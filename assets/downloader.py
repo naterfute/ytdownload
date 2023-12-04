@@ -1,12 +1,16 @@
 import os
 import yt_dlp
 from munch import munchify
+from yt_dlp.utils import DownloadError
 from typing import Optional
 from json import JSONEncoder
+
+
 if __name__ == 'downloader':
   from db import database
 else:
   pass
+
 
 class MyLogger:
     def debug(self, msg):
@@ -24,23 +28,27 @@ class MyLogger:
         pass
 
     def error(self, msg):
-        print(msg)
+      print(msg)
+      pass
+
+
+
 
 
 class Downloader:
   Started=False
   web_use=False
   server=False
-  host=''
-  port=''
-  download_path=''
-  Status=''
-  filename=''
-  time_elapse=''
-  percent=''
-  eta=''
-  url=''
-  title=''
+  host=None
+  port=None
+  download_path=None
+  Status=None
+  filename=None
+  time_elapse=None
+  percent=None
+  eta=None
+  url=None
+  title=None
 
   def __init__(
     self, host:Optional[str]=None, 
@@ -59,15 +67,18 @@ class Downloader:
       pass
     
   
-  def progress_hook(self, d):    
-    if d['status'] == 'finished':
+  def progress_hook(self, d):
+    d = munchify(d)
+    if d.status == 'error':
+      pass
+    if d.status == 'finished':
       print(f'Done Downloading "{d['filename']}"')
       self.Started = False
       self.filename = d['filename']
       self.time_elapse = d['elapsed']
       # print(d['_elapsed_str'])
       # print(d['elapsed'])
-    if d['status'] == 'downloading':
+    if d.status == 'downloading':
       if self.Started:
         print(d['_percent_str'], d['_eta_str'])
         
@@ -80,14 +91,15 @@ class Downloader:
         self.Started = True
         
   def postprocessor_hooks(self, d):
-    if d['status'] == 'started':
+    d = munchify(d)
+    if d.status == 'started':
       info = munchify(d['info_dict'])
       self.url = info.webpage_url
       self.title = info.title
       self.download_path = info.filepath
       self.Status = 'Started'
       pass
-    if d['status'] == 'finished':
+    if d.status == 'finished':
       self.Status = 'Finished'
       pass
 
@@ -101,6 +113,7 @@ class Downloader:
       'format': 'bestaudio/best',
       'writethumbnail': True,
       'outtmpl': 'downloads/%(playlist_title)s/%(title)s.%(ext)s',
+      'skip_broknen': True,
       'postprocessors': [
       {'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
@@ -112,16 +125,20 @@ class Downloader:
 
     
   def download(self, urls):
-    if not self.server:
-      for x in urls:
+    try:
+      if not self.server:
+        for x in urls:
+          with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
+            ydl.download(x)
+      else:    
         with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
-          ydl.download(x)
-    else:    
-      with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
-        ydl.download(urls)
-        db = database()
-        db.write_to_db(self.title, self.url, self.download_path, self.time_elapse)
-
+          ydl.download(urls)
+          db = database()
+          db.write_to_db(self.title, self.url, self.download_path, self.time_elapse)
+    except DownloadError:
+      print('Downlaod error')
+      pass
+      
   def json(self):
     data = {
       'WebUse': {
@@ -139,3 +156,4 @@ class Downloader:
       },
     }
     return data
+  
