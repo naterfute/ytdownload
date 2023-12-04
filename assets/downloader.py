@@ -123,7 +123,7 @@ class Downloader:
     ]}
     return ydl_opts
 
-    
+     
   def download(self, urls):
     try:
       if not self.server:
