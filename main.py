@@ -7,7 +7,7 @@ from typing import Optional
   # def list_commands(self, ctx):
     # return self.commands.keys()
 
-app = typer.Typer()
+app = typer.Typer(no_args_is_help=True)
 
 AUDIO_QUALITY = [64, 128, 256, 320]
 VIDEO_QUALITY = [144, 240, 360, 480, 720, 1080]
@@ -17,7 +17,7 @@ VIDEO_QUALITY = [144, 240, 360, 480, 720, 1080]
 
 @app.command()
 def audio(
-  link: Optional[list[str]] = typer.Option(None, '-l', '--link', help='Url to a youtube video'),
+  link: str,
   incognito: bool = typer.Option(False, '-i', '--incognito', help="Doesn't write to archive file"),
   quality: int = typer.Option(320, '-q', '--quality', help='Choose the quality of the audio(Defaults to best)')
   ):
