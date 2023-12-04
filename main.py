@@ -89,6 +89,9 @@ def audio(
       response = requests.get(f'http://{Youtube.host}:{Youtube.port}/download/{x[0]}')
       if response.status_code == 200:
         print(response.json())
+        json_response = munchify(Youtube.json())
+        logger.trace(json_response.info)
+        
       else:
         print(f'Failure: {response.status_code}')
       pass
