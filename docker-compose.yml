@@ -5,10 +5,10 @@ services:
     container_name: youtube-postgres
     environment:
       - POSTGRES_DB=youtube
-      - POSTGRES_USER=default
-      - POSTGRES_PASSWORD= defaultpassword
-      - POSTGRES_PRIMARY_USER=primary  # Use the same variable
-      - POSTGRES_PRIMARY_PASSWORD=defaultpassword  # Use the same variable
+      - POSTGRES_USER=Primary
+      - POSTGRES_PASSWORD=DefaultPassword
+      - POSTGRES_PRIMARY_USER=Primary  # Use the same variable
+      - POSTGRES_PRIMARY_PASSWORD=DefaultPassword  # Use the same variable
     network_mode: host
     volumes:
       - ./postgres:/var/lib/postgresql/data

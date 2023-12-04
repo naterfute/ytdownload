@@ -6,5 +6,6 @@ db:
   host: localhost
   port: 5432
   db: youtube
-  user: primary
-  password: defaultpassword
+  user: Primary
+  password: DefaultPassword
+  
