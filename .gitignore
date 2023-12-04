@@ -3,3 +3,9 @@
 test.py
 ytdl/__pycache__/
 
+.vscode
+assets
+download
+downloads
+webserver
+postgres
