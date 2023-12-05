@@ -34,7 +34,7 @@ def audio(
 # VIDEO DOWNLOADER
 @app.command()
 def video(
-  link: Optional[list[str]] = typer.Option(None, '-l', '--link', help='Url to a youtube video'),
+  link: str,
   incognito: bool = typer.Option(False, '-i', '--incognito', help="Doesn't write to archive file"),
   quality: Optional[int] = typer.Option('1080', '-q', '--quality', help='Choose the quality of the Video(Defaults to best)')
 ):
