@@ -80,14 +80,15 @@ class Downloader:
       # print(d['elapsed'])
     if d.status == 'downloading':
       if self.Started:
-        print(d['_percent_str'], d['_eta_str'])
-        
+        # print(d['_percent_str'], d['_eta_str'])
+        pass
+      
       else: 
         print(f'Now Downloading "{d['tmpfilename']}"')
         self.filename = d['tmpfilename']
         self.percent = d['_percent_str']
         self.eta = d['_eta_str']
-        print(d['_percent_str'], d['_eta_str'])
+        # print(d['_percent_str'], d['_eta_str'])
         self.Started = True
         
   def postprocessor_hooks(self, d):
@@ -113,7 +114,8 @@ class Downloader:
       'format': 'bestaudio/best',
       'writethumbnail': True,
       'outtmpl': 'downloads/%(playlist_title)s/%(title)s.%(ext)s',
-      'skip_broknen': True,
+      'skip_broken': True,
+      'ignoreerrors': True,
       'postprocessors': [
       {'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
@@ -125,20 +127,17 @@ class Downloader:
 
      
   def download(self, urls):
-    try:
-      if not self.server:
-        for x in urls:
-          with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
-            ydl.download(x)
-      else:    
+    if not self.server:
+      for x in urls:
         with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
-          ydl.download(urls)
-          db = database()
-          db.write_to_db(self.title, self.url, self.download_path, self.time_elapse)
-    except DownloadError:
-      print('Downlaod error')
-      pass
-      
+          ydl.download(x)
+    else:    
+      with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
+        ydl.download(urls)
+        db = database()
+        db.write_to_db(self.title, self.url, self.download_path, self.time_elapse)
+    
+    
   def json(self):
     data = {
       'WebUse': {
