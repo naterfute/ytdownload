@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 from downloader import Downloader
 from flask_bcrypt import Bcrypt
-from munch import munchify
+from munch import munchify, unmunchify
 import threading, queue
 import yaml
 with open('../config.yaml') as stream:
@@ -48,8 +48,9 @@ class Download(Resource):
 
 class DownloadInfo(Resource):
   def get(self):
-    
-    return {}
+    data = youtube.getjson()
+    print(jsonify(data))
+    return {jsonify(data)}
       
 class ping(Resource):
   def get(self):
@@ -65,6 +66,7 @@ class ping(Resource):
 
 api.add_resource(Download, '/download/<string:url>')
 api.add_resource(ping, '/ping')
+api.add_resource(DownloadInfo, '/getjson')
 
 
 if __name__ == '__main__':

@@ -138,7 +138,7 @@ class Downloader:
         db.write_to_db(self.title, self.url, self.download_path, self.time_elapse)
     
     
-  def json(self):
+  def getjson(self):
     data = {
       'WebUse': {
         'use': self.web_use,
