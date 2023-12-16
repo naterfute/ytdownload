@@ -53,7 +53,6 @@ loadedyaml = munchify(yamlfile)
 
 @app.command()
 def audio(
-  server:Optional[bool] = Option(False, '-s', '--server', help='Send a web request to pre-configured url using urls as request'),
   trace:Optional[bool] = Option(False, '-t', '--trace', is_flag=True, help='Enable trace-level debugging.'),
   debug:Optional[bool] = Option(False, '-d', '--debug', is_flag=True, help='Enables debug'),
   urls:list[str] = Argument(),
@@ -80,24 +79,20 @@ def audio(
   else:
     pass
   logger.trace(f'Full Urls: {urls}')
-  if not server:
-    logger.debug(f'Downloading: {urls}')
-    Youtube.download(urls=urls)
-  else:
-    for x in url:
-      logger.debug(f'http://{Youtube.host}:{Youtube.port}/download/{x[0]}')
-      response = requests.get(f'http://{Youtube.host}:{Youtube.port}/download/{x[0]}')
-      if response.status_code == 200:
-        logger.info(response.json())
-        json_response = munchify(Youtube.json())
-        logger.trace(json_response.info)
+  for x in url:
+    logger.debug(f'http://{Youtube.host}:{Youtube.port}/download/{x[0]}')
+    response = requests.get(f'http://{Youtube.host}:{Youtube.port}/download/{x[0]}')
+    if response.status_code == 200:
+      logger.info(response.json())
+      json_response = munchify(Youtube.getjson())
+      logger.trace(json_response.info)
         
-      else:
-        print(f'Failure: {response.status_code}')
-      pass
+    else:
+      print(f'Failure: {response.status_code}')
+    pass
 
 
 
 if __name__ == "__main__":
   app()
-  
+
