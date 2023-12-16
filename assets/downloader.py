@@ -38,7 +38,6 @@ class MyLogger:
 class Downloader:
   Started=False
   web_use=False
-  server=False
   host=None
   port=None
   download_path=None
@@ -54,17 +53,13 @@ class Downloader:
     self, host:Optional[str]=None, 
     download_path:Optional[str]='downloads/', 
     port:Optional[int]=5000,
-    server:Optional[bool]=False
   ):
     if not host == None:
       self.web_use = True
       self.host = host
       self.port = port
       self.download_path = download_path
-    elif server:
-      self.server=True
-    else:
-      pass
+
     
   
   def progress_hook(self, d):
@@ -72,7 +67,7 @@ class Downloader:
     if d.status == 'error':
       pass
     if d.status == 'finished':
-      print(f'Done Downloading "{d['filename']}"')
+      print(f'Done Downloading "{d["filename"]}"')
       self.Started = False
       self.filename = d['filename']
       self.time_elapse = d['elapsed']
@@ -84,7 +79,7 @@ class Downloader:
         pass
       
       else: 
-        print(f'Now Downloading "{d['tmpfilename']}"')
+        print(f'Now Downloading "{d["tmpfilename"]}"')
         self.filename = d['tmpfilename']
         self.percent = d['_percent_str']
         self.eta = d['_eta_str']
@@ -127,16 +122,11 @@ class Downloader:
 
      
   def download(self, urls):
-    if not self.server:
-      for x in urls:
-        with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
-          ydl.download(x)
-    else:    
-      with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
-        ydl.download(urls)
-        db = database()
-        db.write_to_db(self.title, self.url, self.download_path, self.time_elapse)
-    
+    with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
+      ydl.download(urls)
+      print(self.getjson())
+      db = database()
+      db.write_to_db(self.title, self.url, self.download_path, self.time_elapse)
     
   def getjson(self):
     data = {
