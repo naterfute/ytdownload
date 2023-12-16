@@ -1,8 +1,9 @@
 from munch import munchify
 import psycopg as pg
+import psycopg_binary as pg_binary
 import yaml
 
-with open("../config.yaml") as f:
+with open("./config.yaml") as f:
   try:
     yamlfile=yaml.safe_load(f)
   except yaml.YAMLError as exc:
@@ -41,5 +42,6 @@ class database:
         VALUES (%s, %s, %s, %s, NOW());
         """, [title, url, download_path, elapsed])
       self.conn.commit()
+      self.conn.close()
       
 # db.db_create()

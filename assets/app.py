@@ -1,11 +1,10 @@
 from flask import Flask, jsonify, request 
 from flask_restful import Resource, Api
 from downloader import Downloader
-from flask_bcrypt import Bcrypt
 from munch import munchify, unmunchify
 import threading, queue
 import yaml
-with open('../config.yaml') as stream:
+with open('./config.yaml') as stream:
   try:
     yamlfile=yaml.safe_load(stream)
   except yaml.YAMLError as exc:
@@ -14,8 +13,7 @@ config = munchify(yamlfile)
 
 app = Flask(__name__) 
 api = Api(app)
-bcrypt = Bcrypt(app)
-youtube = Downloader(server=True)
+youtube = Downloader()
 
 download_queue = queue.Queue()
 
@@ -49,6 +47,7 @@ class Download(Resource):
 class DownloadInfo(Resource):
   def get(self):
     data = youtube.getjson()
+    data = unmunchify(data)
     print(jsonify(data))
     return {jsonify(data)}
       
@@ -70,4 +69,5 @@ api.add_resource(DownloadInfo, '/getjson')
 
 
 if __name__ == '__main__':
-    app.run(debug = True, port=config.port)
+    app.run(debug = True, host='0.0.0.0', port=config.port)
+
