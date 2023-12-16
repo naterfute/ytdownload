@@ -10,3 +10,5 @@ postgres
 download
 ytdl
 activate
+docker-build.sh
+make_release.sh
