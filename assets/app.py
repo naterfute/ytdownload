@@ -57,11 +57,6 @@ class ping(Resource):
       'ping': 'pong',
             }
 
-# @app.route('/')
-# def home():
-  # return 'use /download/youtubeurl to download videos'
-
-
 api.add_resource(Download, '/download/<string:url>')
 api.add_resource(ping, '/ping')
 api.add_resource(DownloadInfo, '/getjson')
