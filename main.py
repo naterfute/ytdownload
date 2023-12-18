@@ -1,8 +1,7 @@
-from typer import Typer, Option, run, Exit, Argument
+from typer import Typer, Option, Argument
 from requests.exceptions import RequestException
 from urllib.parse import urlparse, parse_qs
 from assets.downloader import Downloader
-from rich.progress import track
 from typing import Optional
 from munch import munchify
 from loguru import logger
