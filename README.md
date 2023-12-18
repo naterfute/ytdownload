@@ -16,3 +16,19 @@ with little configuration needed to be done, go to the [Master Branch](https://g
 This branch is used to download youtube videos then send them to a server,
 or to start a web-server and take url requests to download
 the youtube videos onto a remote server.
+
+## Plans for the future
+
+### Database
+
+whenever request is gotten append to a postgresql table with the following property's
+ name | type |
+| --- | --- |
+| url| str |
+| Queued| bool |
+| downloaded| str |
+| downloaded_data| relational to the download data of download |
+
+After finished downloaded set Queued to False on the Download
+then set a relation from wherever it got saved in the downloads table to download_data
+for easy access to the information from this table.
