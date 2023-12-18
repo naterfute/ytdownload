@@ -1,10 +1,9 @@
-from flask import Flask, jsonify, request 
+from flask import Flask, jsonify
 from flask_restful import Resource, Api
 from downloader import Downloader
 from munch import munchify, unmunchify
 import threading, queue
 import yaml
-from json import JSONEncoder
 with open('./config.yaml') as stream:
   try:
     yamlfile=yaml.safe_load(stream)
