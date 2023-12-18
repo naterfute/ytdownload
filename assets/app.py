@@ -4,6 +4,7 @@ from downloader import Downloader
 from munch import munchify, unmunchify
 import threading, queue
 import yaml
+from json import JSONEncoder
 with open('./config.yaml') as stream:
   try:
     yamlfile=yaml.safe_load(stream)
@@ -48,8 +49,7 @@ class DownloadInfo(Resource):
   def get(self):
     data = youtube.getjson()
     data = unmunchify(data)
-    print(jsonify(data))
-    return {jsonify(data)}
+    return jsonify(data)
       
 class ping(Resource):
   def get(self):
