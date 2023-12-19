@@ -71,20 +71,13 @@ class Downloader:
       self.Started = False
       self.filename = d['filename']
       self.time_elapse = d['elapsed']
-      # print(d['_elapsed_str'])
-      # print(d['elapsed'])
     if d.status == 'downloading':
-      if self.Started:
-        # print(d['_percent_str'], d['_eta_str'])
-        pass
       
-      else: 
-        print(f'Now Downloading "{d["tmpfilename"]}"')
-        self.filename = d['tmpfilename']
-        self.percent = d['_percent_str']
-        self.eta = d['_eta_str']
-        # print(d['_percent_str'], d['_eta_str'])
-        self.Started = True
+      print(f'Now Downloading "{d["tmpfilename"]}"')
+      self.filename = d['tmpfilename']
+      self.percent = d['_percent_str']
+      self.eta = d['_eta_str']
+      self.Started = True
         
   def postprocessor_hooks(self, d):
     d = munchify(d)
