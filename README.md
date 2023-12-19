@@ -4,7 +4,7 @@
 
 Please do Note that this Runs using a flask server, the flask server has **No way To authenticate**, That means
 if you have the port open to the public, anyone can send requests. This is not something you want, as far as i'm
-aware, there are no errors in my code that would allow anyone to execute any destructive code, or something.
+aware, there are no errors in my code that would allow anyone to execute any destructive code or something else malicious.
 That's only as far as I know, just be careful with this.
 
 ### Prefers Playlist over individual videos
@@ -24,10 +24,10 @@ the youtube videos onto a remote server.
 whenever request is gotten append to a postgresql table with the following property's
  name | type |
 | --- | --- |
-| url| str |
-| Queued| bool |
-| downloaded| str |
-| downloaded_data| relational to the download data of download |
+| url | str |
+| Queued | bool |
+| downloaded | str |
+| downloaded_data | relational to the download data from  download |
 
 After finished downloaded set Queued to False on the Download
 then set a relation from wherever it got saved in the downloads table to download_data
