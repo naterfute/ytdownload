@@ -9,3 +9,6 @@ download
 downloads
 webserver
 postgres
+activate
+docker-build.sh
+make_release.sh
