@@ -6,7 +6,7 @@ Terminal Youtube Downloader using [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 ## Todo:
 - [ ] make website using Django
 - [ ] make better way to choose quality
-
+- [ ] make this downlaoder actually good
 
 ## Setup
     git clone https://github.com/KalebSchmidlkofer/ytdownload.git
