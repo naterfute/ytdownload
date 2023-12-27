@@ -21,14 +21,16 @@ def audio(
   incognito: bool = typer.Option(False, '-i', '--incognito', help="Doesn't write to archive file"),
   quality: int = typer.Option(320, '-q', '--quality', help='Choose the quality of the audio(Defaults to best)')
   ):
+  links = []
+  links.append(link)
   quality = int(quality)
   youtube.check_links(link)
   youtube.quality_check(quality, AUDIO_QUALITY)
   if not incognito:
-    youtube.download(AUDIO.DEFAULT, link, quality)
+    youtube.download(AUDIO.DEFAULT, links, quality)
   else:
     print('Running incognito')
-    youtube.download(AUDIO.INCOGNITO, link, quality)
+    youtube.download(AUDIO.INCOGNITO, links, quality)
 
 
 # VIDEO DOWNLOADER
