@@ -3,17 +3,10 @@ from ytdl.variables import youtube, VIDEO, AUDIO
 import typer
 from typing import Optional
 
-# class NaturalOrderGroup(click.Group):
-  # def list_commands(self, ctx):
-    # return self.commands.keys()
-
-app = typer.Typer(no_args_is_help=True)
+app = typer.Typer(no_args_is_help=True, add_completion=False)
 
 AUDIO_QUALITY = [64, 128, 256, 320]
 VIDEO_QUALITY = [144, 240, 360, 480, 720, 1080]
-
-# AUDIO DOWNLOADER
-  
 
 @app.command()
 def audio(
@@ -33,7 +26,6 @@ def audio(
     youtube.download(AUDIO.INCOGNITO, links, quality)
 
 
-# VIDEO DOWNLOADER
 @app.command()
 def video(
   link: str,
