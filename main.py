@@ -1,7 +1,6 @@
 #!/usr/bin/python3.10
 from ytdl.variables import youtube, VIDEO, AUDIO
 import typer
-from typing import Optional
 
 app = typer.Typer(no_args_is_help=True, add_completion=False)
 
@@ -30,7 +29,7 @@ def audio(
 def video(
   link: str,
   incognito: bool = typer.Option(False, '-i', '--incognito', help="Doesn't write to archive file"),
-  quality: Optional[int] = typer.Option('1080', '-q', '--quality', help='Choose the quality of the Video(Defaults to best)')
+  quality: int = typer.Option(1080, '-q', '--quality', help='Choose the quality of the video(Defaults to best)')
 ):
   youtube.check_links(link)
   youtube.quality_check(quality, VIDEO_QUALITY)

@@ -12,3 +12,5 @@ postgres
 activate
 docker-build.sh
 make_release.sh
+dev
+requirements_new.txt
