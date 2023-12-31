@@ -61,14 +61,14 @@ def audio(
   
   try:
     Youtube = Downloader(host=f'{loadedyaml.host}', port=loadedyaml.port)
-    r = requests.get(f'http://{Youtube.host}:{Youtube.port}/ping')
+    r = requests.get(f'http://{loadedyaml.host}:{loadedyaml.port}/ping')
     r = munchify(r.json())
     logger.info(f'Pinging server: {r.ping}')
     logger.debug(r)
   except RequestException as e:
     logger.warning('Failed to connect to webserver run in debug to see more info')
     logger.info("Try making sure the webserver is up and your calling the right host and port!")
-    logger.info(f"current host:{Youtube.host} port:{Youtube.port}")
+    logger.info(f"current host:{loadedyaml.host} port:{loadedyaml.port}")
     logger.debug(e)
     sys.exit()
   url=spliturl(urls)
@@ -79,8 +79,8 @@ def audio(
     pass
   logger.trace(f'Full Urls: {urls}')
   for x in url:
-    logger.debug(f'http://{Youtube.host}:{Youtube.port}/download/{x[0]}')
-    response = requests.get(f'http://{Youtube.host}:{Youtube.port}/download/{x[0]}')
+    logger.debug(f'http://{loadedyaml.host}:{loadedyaml.port}/download/{x[0]}')
+    response = requests.get(f'http://{loadedyaml.host}:{loadedyaml.port}/download/{x[0]}')
     if response.status_code == 200:
       logger.info(response.json())
       json_response = munchify(Youtube.getjson())
