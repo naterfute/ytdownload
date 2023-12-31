@@ -12,3 +12,7 @@ ytdl
 activate
 docker-build.sh
 make_release.sh
+dev
+page_boy
+.page_boy
+requirements_new.txt
