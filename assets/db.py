@@ -43,10 +43,12 @@ class database:
         self.conn.commit()
     except pg.Error as e:
       print(f"Error creating tables: {e}")
+      exit()
+    except Exception as e:
+      print(f'An Error Occured: {e}')
   
   
   def write_to_videoDB(self, title, url, download_path, elapsed):
-    self.db_create()
     with self.conn.cursor() as cursor:
       cursor.execute("""
         INSERT INTO downloaded (title, url, path, elapsed, time)
@@ -56,7 +58,6 @@ class database:
       self.conn.close()
   
   def write_to_albumDB(self, title, url):
-    self.db_create()
     with self.conn.cursor() as cursor:
       cursor.execute("""
         INSERT INTO albums (title, url, time)
