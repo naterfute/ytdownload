@@ -55,9 +55,16 @@ def audio(
   trace:Optional[bool] = Option(False, '-t', '--trace', is_flag=True, help='Enable trace-level debugging.'),
   debug:Optional[bool] = Option(False, '-d', '--debug', is_flag=True, help='Enables debug'),
   urls:list[str] = Argument(),
+  localtest:Optional[bool] = Option(False, '-l', '--local', is_flag=True, help='ONLY USE WITH 1 URL! Downloaded file locally using same options(for testing only) '),
 ):
   
   debug_init(trace, debug)  
+  
+  if localtest:
+    downloader = Downloader(loadedyaml.host, loadedyaml.port)
+    downloader.download(urls=urls)
+    exit()
+    
   
   try:
     Youtube = Downloader(host=f'{loadedyaml.host}', port=loadedyaml.port)
@@ -73,7 +80,7 @@ def audio(
     sys.exit()
   url=spliturl(urls)
   if url == []:
-    logger.error('Url Is empty! exiting')
+    logger.error('No provieded Urls!\nExiting')
     sys.exit()
   else:
     pass
