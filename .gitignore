@@ -14,3 +14,5 @@ docker-build.sh
 make_release.sh
 dev
 requirements_new.txt
+.page_boy
+page_boy
