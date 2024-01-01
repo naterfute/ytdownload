@@ -10,6 +10,7 @@ with open("./config.yaml") as f:
     print(exc)
 config = munchify(yamlfile)
 
+
 class database:
   conn = None
 
@@ -29,18 +30,38 @@ class database:
             time date
           )             
           """)
+        
+        cursor.execute("""
+          CREATE TABLE IF NOT EXISTS albums (
+            id serial PRIMARY KEY,
+            title text,
+            url text UNIQUE,
+            time date
+          )             
+          """)
+        
         self.conn.commit()
     except pg.Error as e:
-      print(f"Error creating table: {e}")
+      print(f"Error creating tables: {e}")
   
   
-  def write_to_db(self, title, url, download_path, elapsed):
+  def write_to_videoDB(self, title, url, download_path, elapsed):
     self.db_create()
     with self.conn.cursor() as cursor:
       cursor.execute("""
         INSERT INTO downloaded (title, url, path, elapsed, time)
         VALUES (%s, %s, %s, %s, NOW());
         """, [title, url, download_path, elapsed])
+      self.conn.commit()
+      self.conn.close()
+  
+  def write_to_albumDB(self, title, url):
+    self.db_create()
+    with self.conn.cursor() as cursor:
+      cursor.execute("""
+        INSERT INTO albums (title, url, time)
+        VALUES (%s, %s, NOW());
+        """, [title, url])
       self.conn.commit()
       self.conn.close()
       
