@@ -4,6 +4,7 @@ from downloader import Downloader
 from munch import munchify, unmunchify
 import threading, queue
 import yaml
+from db import database
 with open('./config.yaml') as stream:
   try:
     yamlfile=yaml.safe_load(stream)
@@ -63,5 +64,7 @@ api.add_resource(DownloadInfo, '/getjson')
 
 
 if __name__ == '__main__':
-    app.run(debug = True, host='0.0.0.0', port=config.port)
+  db = database()
+  db.db_create()
+  app.run(debug = True, host='0.0.0.0', port=config.port)
 
