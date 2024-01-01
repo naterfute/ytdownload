@@ -70,8 +70,8 @@ class Downloader:
       self.Started = False
       self.filename = d['filename']
       self.time_elapse = d['elapsed']
-      self.album = d.info_dict.playlist_title
-      self.playlist = d.info_dict.playlist_id
+      self.album = d.info_dict.playlist_title, 'unknown'
+      self.playlist = d.info_dict.playlist_id, 'unknown'
       
       db = database()
       db.write_to_videoDB(self.title, self.url, self.download_path, self.time_elapse)
