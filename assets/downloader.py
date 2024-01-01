@@ -51,14 +51,13 @@ class Downloader:
 
   def __init__(
     self, host:Optional[str]=None, 
-    download_path:Optional[str]='downloads/', 
     port:Optional[int]=5000,
   ):
     if not host == None:
       self.web_use = True
       self.host = host
       self.port = port
-      self.download_path = download_path
+      self.download_path = 'downloads/'
 
     
   
@@ -71,8 +70,14 @@ class Downloader:
       self.Started = False
       self.filename = d['filename']
       self.time_elapse = d['elapsed']
-    if d.status == 'downloading':
+      self.album = d['playlist_title']
+      self.playlist = d.playlist_url      
       
+      db = database()
+      db.write_to_videoDB(self.title, self.url, self.download_path, self.time_elapse)
+      db.write_to_albumDB(self.album, self.playlist)
+      
+    if d.status == 'downloading':
       print(f'Now Downloading "{d["tmpfilename"]}"')
       self.filename = d['tmpfilename']
       self.percent = d['_percent_str']
@@ -118,8 +123,6 @@ class Downloader:
     with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
       ydl.download(urls)
       print(self.getjson())
-      db = database()
-      db.write_to_db(self.title, self.url, self.download_path, self.time_elapse)
     
   def getjson(self):
     data = {
