@@ -101,7 +101,7 @@ class Downloader:
       'postprocessor_hooks': [self.postprocessor_hooks],
       'format': 'bestaudio/best',
       'writethumbnail': True,
-      'outtmpl': 'downloads/%(playlist_title)s/%(title)s.%(ext)s',
+      'outtmpl': 'downloads/%(playlist_title)s/%(video_autonumber)s-%(title)s.%(ext)s',
       'skip_broken': True,
       'ignoreerrors': True,
       'postprocessors': [
