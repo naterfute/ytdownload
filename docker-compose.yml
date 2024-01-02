@@ -1,17 +1,25 @@
 version: '3'
+
 services:
-  db:
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: myapp_container
+    network_mode: host
+    depends_on:
+      - postgres_db
+
+  postgres_db:
     image: postgres:latest
-    container_name: youtube-postgres
+    container_name: postgres_container
     environment:
-      - POSTGRES_DB=youtube
-      - POSTGRES_USER=Primary
-      - POSTGRES_PASSWORD=DefaultPassword
-      - POSTGRES_PRIMARY_USER=Primary  # Use the same variable
-      - POSTGRES_PRIMARY_PASSWORD=DefaultPassword  # Use the same variable
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
     network_mode: host
     volumes:
-      - ./postgres:/var/lib/postgresql/data
-    restart: unless-stopped
-  
+      - pg_data:/var/lib/postgresql/data
 
+volumes:
+  pg_data:
