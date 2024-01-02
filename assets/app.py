@@ -42,7 +42,7 @@ class Download(Resource):
       print(f'Download completed for {url}')
 
   def remove_active_thread(self):
-    self.active -= 1
+    self.active - 1
 
 
 class DownloadInfo(Resource):
