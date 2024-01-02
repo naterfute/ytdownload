@@ -123,7 +123,6 @@ class Downloader:
   def download(self, urls):
     with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
       ydl.download(urls)
-      print(self.getjson())
     
   def getjson(self):
     data = {
