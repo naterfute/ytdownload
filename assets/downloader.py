@@ -99,7 +99,7 @@ class Downloader:
 
   def ydl_opts(self):
     ydl_opts = {
-      'ratelimit': 500 * 1024, # Kilobytes
+      'ratelimit': 62500, # Kilobytes
       'logger': MyLogger(),
       'breakonexisting': True,
       'progress_hooks': [self.progress_hook],
