@@ -2,10 +2,9 @@ host: localhost
 port: 5000
 
 db:
-## Does nothing yet
   host: localhost
   port: 5432
-  db: youtube
-  user: postgres
-  password: defaultpassword
+  db: mydatabase
+  user: myuser
+  password: mypassword
   
