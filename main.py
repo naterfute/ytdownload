@@ -61,11 +61,11 @@ def audio(
   debug_init(trace, debug)  
   
   if localtest:
-    downloader = Downloader(loadedyaml.host, loadedyaml.port)
-    downloader.download(urls=urls)
-    exit()
+    ytdown = Downloader(loadedyaml.host, loadedyaml.port)
+    ytdown.download(urls=urls)
+  else:
+    pass
     
-  
   try:
     Youtube = Downloader(host=f'{loadedyaml.host}', port=loadedyaml.port)
     r = requests.get(f'http://{loadedyaml.host}:{loadedyaml.port}/ping')
