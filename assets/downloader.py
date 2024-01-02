@@ -82,7 +82,8 @@ class Downloader:
       self.filename = d['tmpfilename']
       self.percent = d['_percent_str']
       self.eta = d['_eta_str']
-      self.Started = True
+      if not self.Started:
+        self.Started = True
         
   def postprocessor_hooks(self, d):
     d = munchify(d)
