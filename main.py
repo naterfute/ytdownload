@@ -54,17 +54,12 @@ loadedyaml = munchify(yamlfile)
 def audio(
   trace:Optional[bool] = Option(False, '-t', '--trace', is_flag=True, help='Enable trace-level debugging.'),
   debug:Optional[bool] = Option(False, '-d', '--debug', is_flag=True, help='Enables debug'),
-  urls:list[str] = Argument(),
-  localtest:Optional[bool] = Option(False, '-l', '--local', is_flag=True, help='ONLY USE WITH 1 URL! Downloaded file locally using same options(for testing only) '),
+  urls:list[str] = Argument()
 ):
   
   debug_init(trace, debug)  
   
-  if localtest:
-    ytdown = Downloader(loadedyaml.host, loadedyaml.port)
-    ytdown.download(urls=urls)
-  else:
-    pass
+
     
   try:
     Youtube = Downloader(host=f'{loadedyaml.host}', port=loadedyaml.port)
