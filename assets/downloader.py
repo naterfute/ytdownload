@@ -76,7 +76,7 @@ class Downloader:
       db = database()
       db.write_to_videoDB(self.title, self.url, self.download_path, self.time_elapse)
       db.write_to_albumDB(self.album, self.playlist)
-      
+
     if d.status == 'downloading':
       print(f'Now Downloading "{d["tmpfilename"]}"')
       self.filename = d['tmpfilename']
@@ -99,7 +99,7 @@ class Downloader:
 
   def ydl_opts(self):
     ydl_opts = {
-      'ratelimit': 62500, # Kilobytes
+      # 'ratelimit': 62500, # Kilobytes
       'logger': MyLogger(),
       'breakonexisting': True,
       'progress_hooks': [self.progress_hook],
@@ -119,7 +119,7 @@ class Downloader:
 
     return ydl_opts
 
-     
+
   def download(self, urls):
     with yt_dlp.YoutubeDL(self.ydl_opts()) as ydl:
       ydl.download(urls)
