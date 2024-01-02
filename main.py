@@ -36,8 +36,8 @@ def spliturl(urls):
     else:
       url.append(video_id)
     continue
-  logger.debug('Done Splitting Urls')
-  logger.debug(url)
+  logger.trace('Done Splitting Urls')
+  logger.trace(url)
   return url
   
   
